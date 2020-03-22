@@ -23,7 +23,8 @@ class PlayerComponent extends React.Component {
     }
     const selectedCardValue = this.props.selectedCard.getCardValue();
     if (selectedCardValue === 1 || selectedCardValue === 2 || selectedCardValue === 3 || selectedCardValue === 5 || selectedCardValue === 6) {
-      if ((isCurrentPlayer && (selectedCardValue === 5 && this.props.selectedCard.id === card.id)) || player.protected) return false;
+      if (isCurrentPlayer && (selectedCardValue === 5 && this.props.selectedCard.id === card.id)) return true;
+      if (isCurrentPlayer || player.protected) return false;
       return true;
     }      
   }

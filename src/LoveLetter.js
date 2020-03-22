@@ -34,6 +34,10 @@ const playCard = (G, ctx, playData) => {
   }
   const oldCard = player.card.id === playData.id;
   const card = oldCard ? player.card : player.newCard;
+  if (!card) {
+    ctx.events.endTurn();
+    return;
+  }
 
   card.doAction(G, ctx, playData);
 
