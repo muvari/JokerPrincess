@@ -1,38 +1,100 @@
-.App {
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: #fbfbfc;
+  min-width: 500px;
   text-align: center;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.square {
+  color: #fff;
+  border: 4px solid black;
+  background-color: black;
+  border-radius: 4px;
+  float: left;
+  font-size: 40px;
+  font-weight: bold;
+  line-height: 52px;
+  height: 60px;
+  margin-right: 1px;
+  margin-top: 1px;
+  padding: 0;
+  text-align: center;
+  width: 60px;
+  -webkit-touch-callout: none; 
+  -webkit-user-select: none;
+  -moz-user-select: none; 
+  -ms-user-select: none; 
+  user-select: none;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.zero {
+  background-color: #999;
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.one {
+  background-color: #5e4fa2;
+}
+.two {
+  background-color: #3288bd;
+}
+.three {
+  background-color: #66c2a5;
+}
+.four {
+  background-color: #abdda4;
+}
+.five {
+  background-color: #fee08b;
+}
+.six {
+  background-color: #f46d43;
+}
+.seven {
+  background-color: #d53e4f;
+}
+.eight {
+  background-color: #9e0142;
+}
+.info {
+  min-width: 40px;
+  width: initial;
+  height: 40px;
+  line-height: 38px;
+  font-size: 18px;
+}
+.info-text {
+  text-align: center;
+  font-weight: 700;
+}
+.hand {
+  margin-top: 4px;
+  display: flex;
+  justify-content: space-evenly;
+}
+.player {
   display: flex;
   flex-direction: column;
+  width: 500px;
+  background-color: white;
+  box-shadow: 0 0 0 1px rgba(67,41,163,.08), 0 1px 5px 0 rgba(67,41,163,.08);
+  padding: 4px;
+  border-radius: 4px;
+  min-width: 500px;
+  margin: 4px;
+}
+.player-info {
+  margin: 4px;
+}
+.board {
+  display: flex;
   align-items: center;
+  flex-direction: column;
+}
+.others {
+  display: flex;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  flex-direction: row;
+  margin-top: 20px;
 }
