@@ -6,8 +6,8 @@ class CardComponent extends React.Component {
 
   onClick = () => {
     window.navigator.vibrate(20);
-    if (this.props.moves && this.props.highlight)
-      this.props.moves.playCard({id: this.props.card.id});
+    if (this.props.playCard && this.props.highlight)
+      this.props.playCard(this.props.card, this.props.player);
   }
 
 	render() {

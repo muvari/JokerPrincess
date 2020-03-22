@@ -28,6 +28,10 @@ const drawCard = (G, ctx) => {
 
 const playCard = (G, ctx, playData) => {  
   const player = G.players[ctx.currentPlayer];
+  if (!player.card) {
+    ctx.events.endTurn();
+    return;
+  }
   const oldCard = player.card.id === playData.id;
   const card = oldCard ? player.card : player.newCard;
 

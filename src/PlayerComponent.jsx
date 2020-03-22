@@ -12,18 +12,30 @@ class PlayerComponent extends React.Component {
     const bothCards = player.card && player.newCard;
     const otherCard = player.card.id === card.id ? player.newCard : player.card;
 
-    if (!(isCurrentPlayer && bothCards)) 
-      return false;
+    // First selection
+    if (!this.props.selectedCard) {
+      if (!(isCurrentPlayer && bothCards)) 
+        return false;
 
-    if (otherCard.getCardValue() === 7 && (card.getCardValue() === 5 || card.getCardValue() === 6))
-      return false;
-    return true;      
+      if (otherCard.getCardValue() === 7 && (card.getCardValue() === 5 || card.getCardValue() === 6))
+        return false;
+      return true;
+    }
+    const selectedCardValue = this.props.selectedCard.getCardValue();
+    if (selectedCardValue === 1 || selectedCardValue === 2 || selectedCardValue === 3 || selectedCardValue === 5 || selectedCardValue === 6) {
+      if ((isCurrentPlayer && (selectedCardValue === 5 && this.props.selectedCard.id === card.id)) || player.protected) return false;
+      return true;
+    }      
+  }
+
+  shouldHide(card) {
+    const player = this.props.player;
+    const isCurrentPlayer = this.props.currentPlayer === player.id.toString();
+    return !isCurrentPlayer;
   }
 
 	render() {
     const player = this.props.player;
-    const isCurrentPlayer = this.props.currentPlayer === player.id.toString();
-
     const discarded = [];
     for (const played of player.discarded) {
       discarded.push(
@@ -44,15 +56,19 @@ class PlayerComponent extends React.Component {
             <CardComponent 
               card={player.card}
               moves={this.props.moves}
-              hide={!isCurrentPlayer}
+              hide={this.shouldHide(player.card)}
               highlight={this.shouldHighlight(player.card)}
+              playCard={this.props.playCard}
+              player={player}
               />) : "" }
             {player.newCard ? (
             <CardComponent 
               card={player.newCard}
               moves={this.props.moves}
-              hide={!isCurrentPlayer}
+              hide={this.shouldHide(player.card)}
               highlight={this.shouldHighlight(player.newCard)}
+              playCard={this.props.playCard}
+              player={player}
             />) : "" }
           </div>
           <div>Played Cards</div>
