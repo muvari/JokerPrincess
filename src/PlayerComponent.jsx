@@ -3,8 +3,23 @@ import CardComponent from './CardComponent';
 
 class PlayerComponent extends React.Component {
 
+  shouldHighlight(card) {
+    const player = this.props.player;
+    const isCurrentPlayer = this.props.currentPlayer === player.id.toString();
+    const bothCards = player.card && player.newCard;
+    const otherCard = player.card.id === card.id ? player.newCard : player.card;
+
+    if (!(isCurrentPlayer && bothCards)) 
+      return false;
+
+    if (otherCard.getCardValue() === 7 && (card.getCardValue() === 5 || card.getCardValue() === 6))
+      return false;
+    return true;      
+  }
+
 	render() {
     const player = this.props.player;
+    const isCurrentPlayer = this.props.currentPlayer === player.id.toString();
 
     const discarded = [];
     for (const played of player.discarded) {
@@ -26,13 +41,15 @@ class PlayerComponent extends React.Component {
             <CardComponent 
               card={player.card}
               moves={this.props.moves}
-              hide={this.props.currentPlayer !== player.id.toString()}
+              hide={!isCurrentPlayer}
+              highlight={this.shouldHighlight(player.card)}
               />) : "" }
             {player.newCard ? (
             <CardComponent 
               card={player.newCard}
               moves={this.props.moves}
-              hide={this.props.currentPlayer !== player.id.toString()}
+              hide={!isCurrentPlayer}
+              highlight={this.shouldHighlight(player.newCard)}
             />) : "" }
           </div>
           <div>Played Cards</div>

@@ -30,6 +30,11 @@ body {
   -ms-user-select: none; 
   user-select: none;
 }
+.highlight {
+  -webkit-box-shadow: 0px 0px 9px 5px rgba(231,166,26,1);
+  -moz-box-shadow: 0px 0px 9px 5px rgba(231,166,26,1);
+  box-shadow: 0px 0px 9px 5px rgba(231,166,26,1);
+}
 .zero {
   background-color: #999;
 }
