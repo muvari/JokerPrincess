@@ -5,6 +5,7 @@ export class Player {
   newCard;
   discarded = [];
   eliminated = false;
+  protected = false;
 
   constructor(id) {
     this.id = id;

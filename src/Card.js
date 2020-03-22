@@ -46,6 +46,10 @@ export class FourCard extends Card {
   getCardValue() {
     return 4;
   }
+
+  doAction(G, ctx) {
+    G.players[ctx.currentPlayer].protected = true;
+  }
 }
 
 export class FiveCard extends Card {

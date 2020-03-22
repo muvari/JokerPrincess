@@ -2,8 +2,16 @@ import React from 'react';
 import PlayerComponent from './PlayerComponent';
 
 class LoveLetterBoard extends React.Component {
-  render() {
 
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      selectedCard: undefined
+    }
+  }
+
+  render() {
     const otherPlayers = [];
     for (const player of this.props.G.players) {
       if (player.id.toString() === this.props.ctx.currentPlayer)

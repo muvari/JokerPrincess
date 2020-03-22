@@ -1,5 +1,6 @@
 import React from 'react';
 import CardComponent from './CardComponent';
+import '../node_modules/@fortawesome/fontawesome-free/css/all.min.css';
 
 class PlayerComponent extends React.Component {
 
@@ -34,7 +35,7 @@ class PlayerComponent extends React.Component {
 		return (
       <div className="player">
           <div className="playerInfo">
-            <div className={player.eliminated ? "elim" : ""}>Name: {player.id}</div>
+          <div className={player.eliminated ? "elim" : ""}>Name: {player.id} {player.protected ? <i title="Protected" style={{color: "#abdda4"}} className="fas fa-shield-alt" /> : ""}</div>
             <div>Wins: {player.wins}/{this.props.requiredWins}</div>
           </div>
           <div>Hand</div>

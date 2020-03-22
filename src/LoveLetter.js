@@ -92,6 +92,7 @@ export const LoveLetter = {
       },
     },
     onBegin: (G, ctx) => {
+      G.players[ctx.currentPlayer].protected = false;
       drawCard(G, ctx);
     }
   },
