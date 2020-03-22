@@ -11,6 +11,17 @@ class Card {
   doAction() {
 
   }
+
+  eliminatePlayer(G, ctx, player) {
+    if (player.card)
+      player.discarded.push(player.card);
+    if (player.newCard)
+      player.discarded.push(player.newCard);
+    G.eligible = G.eligible.filter((p) => p !== player.id);
+    player.eliminated = true;
+    player.card = undefined;
+    player.newCard = undefined;
+  }
 }
 
 export class OneCard extends Card {
@@ -58,5 +69,9 @@ export class SevenCard extends Card {
 export class EightCard extends Card {
   getCardValue() {
     return 8;
+  }
+
+  doAction(G, ctx) {
+    this.eliminatePlayer(G, ctx, G.players[ctx.currentPlayer]);
   }
 }

@@ -103,3 +103,7 @@ body {
   flex-direction: row;
   margin-top: 20px;
 }
+.elim {
+  color: #9e0142;
+  text-decoration: line-through;
+}

@@ -4,6 +4,7 @@ export class Player {
   card;
   newCard;
   discarded = [];
+  eliminated = false;
 
   constructor(id) {
     this.id = id;

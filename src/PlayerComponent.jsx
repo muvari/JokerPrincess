@@ -5,6 +5,8 @@ class PlayerComponent extends React.Component {
 
   shouldHighlight(card) {
     const player = this.props.player;
+    if (player.eliminated) 
+      return false;
     const isCurrentPlayer = this.props.currentPlayer === player.id.toString();
     const bothCards = player.card && player.newCard;
     const otherCard = player.card.id === card.id ? player.newCard : player.card;
@@ -32,7 +34,7 @@ class PlayerComponent extends React.Component {
 		return (
       <div className="player">
           <div className="playerInfo">
-            <div>Name: {player.id}</div>
+            <div className={player.eliminated ? "elim" : ""}>Name: {player.id}</div>
             <div>Wins: {player.wins}/{this.props.requiredWins}</div>
           </div>
           <div>Hand</div>
