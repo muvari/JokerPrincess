@@ -14,9 +14,9 @@ class CardComponent extends React.Component {
 		return (
       <button key={this.props.id} 
         type="button"
-        className={`square ${this.props.hide ? classes[0] : classes[this.props.card.getCardValue()]} ${this.props.highlight ? "highlight": ""}`}
+        className={`square ${this.props.hide ? classes[0] : classes[this.props.card.value]} ${this.props.highlight ? "highlight": ""}`}
         onClick={this.onClick}>
-        {this.props.hide ? "LL" : this.props.card.getCardValue()}
+        {this.props.hide ? "LL" : this.props.card.value}
       </button>
 		)
 	}

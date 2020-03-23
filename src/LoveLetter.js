@@ -1,24 +1,7 @@
 import { Player } from './Player';
 import * as Card from './Card';
 
-const Deck = [
-  new Card.OneCard(0),
-  new Card.OneCard(1),
-  new Card.OneCard(2),
-  new Card.OneCard(3),
-  new Card.OneCard(4),
-  new Card.TwoCard(5),
-  new Card.TwoCard(6),
-  new Card.ThreeCard(7),
-  new Card.ThreeCard(8),
-  new Card.FourCard(9),
-  new Card.FourCard(10),
-  new Card.FiveCard(11),
-  new Card.FiveCard(12),
-  new Card.SixCard(13),
-  new Card.SevenCard(14),
-  new Card.EightCard(15),
-];
+const Deck = Array(16).fill().map((_val, i) => (new Card.Card(i)));
 
 const drawCard = (G, ctx) => {
   const player = G.players[ctx.currentPlayer];
@@ -26,25 +9,21 @@ const drawCard = (G, ctx) => {
     player.newCard = G.deck.pop();
 }
 
-const playCard = (G, ctx, playData) => {  
+const playCard = (G, ctx, playData) => {
   const player = G.players[ctx.currentPlayer];
-  if (!player.card) {
-    ctx.events.endTurn();
-    return;
-  }
-  const oldCard = player.card.id === playData.id;
-  const card = oldCard ? player.card : player.newCard;
-  if (!card) {
-    ctx.events.endTurn();
-    return;
-  }
+  const isOldCard = player.card && player.card.id === playData.id;
+  const selectedCard = isOldCard ? player.card : player.newCard;
+  const otherCard = !isOldCard ? player.card : player.newCard;
 
-  card.doAction(G, ctx, playData);
-
-  if (!player.eliminated)
-    player.discarded.push(card);
-  if (oldCard)
-    player.card = player.newCard; 
+  // Run card action
+  Card.cardActions[Card.cardValuesById[playData.id]](G, ctx, playData, otherCard);
+  
+  if (!player.eliminated) {  
+    if (selectedCard)
+      player.discarded.push(selectedCard);
+    if (isOldCard)
+      player.card = player.newCard; 
+  } 
   player.newCard = undefined;
   ctx.events.endTurn();
 }
@@ -54,7 +33,7 @@ export const LoveLetter = {
     round: 1,
     requiredWins: parseInt(13 / ctx.numPlayers) + 1,
     players: Array(ctx.numPlayers).fill().map((_val, i) => (new Player(i))),
-    deck: [],
+    deck: [].concat(Deck),
     hiddenCard: undefined,
     eligible: [],
     lastWin: 0,
@@ -83,6 +62,18 @@ export const LoveLetter = {
       },
       onEnd: (G, ctx) => {
         G.round += 1;
+        if (G.eligible.length === 1)
+          G.players[G.eligible[0]].wins += 1;
+        // if (G.deck.length === 0) {
+        //   let i = arr.indexOf(Math.max(...arr));
+        // }
+      },
+      endIf: (G) => {
+        if (G.eligible.length === 1)
+          return true;
+        if (G.deck.length === 0)
+          return true;
+        return false;
       }
     },
   },

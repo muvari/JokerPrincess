@@ -17,7 +17,7 @@ class LoveLetterBoard extends React.Component {
   playCard(card, actionPlayer) {
     // First click
     if (!this.state.selectedCard) {
-      if (card.getCardValue() === 4 || card.getCardValue() === 8 || card.getCardValue() === 7) {
+      if (card.value === 4 || card.value === 8 || card.value === 7) {
         this.props.moves.playCard({id: card.id});
         return;
       }
@@ -26,7 +26,7 @@ class LoveLetterBoard extends React.Component {
     }
     
     // Second click
-    const selectedCardValue = this.state.selectedCard.getCardValue();
+    const selectedCardValue = this.state.selectedCard.value;
     if (selectedCardValue !== 1) {
       this.props.moves.playCard({id: this.state.selectedCard.id, actionPlayerId: actionPlayer.id });
       this.setState({selectedCard: undefined });
@@ -36,7 +36,7 @@ class LoveLetterBoard extends React.Component {
   getInstructions() {
     if (this.props.ctx.currentPlayer !== this.props.playerID) return "Wait...";
     if (!this.state.selectedCard) return "Select a card.";
-    const selectedCardValue = this.state.selectedCard.getCardValue();
+    const selectedCardValue = this.state.selectedCard.value;
     if (selectedCardValue === 1)
       return "Select a card to guess."
     else if (selectedCardValue === 2)

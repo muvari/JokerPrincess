@@ -1,8 +1,8 @@
 export class Player {
   id = 0;
   wins = 0;
-  card;
-  newCard;
+  card = undefined;
+  newCard = undefined;
   discarded = [];
   eliminated = false;
   protected = false;

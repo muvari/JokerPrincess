@@ -17,11 +17,11 @@ class PlayerComponent extends React.Component {
       if (!(isCurrentPlayer && bothCards)) 
         return false;
 
-      if (otherCard.getCardValue() === 7 && (card.getCardValue() === 5 || card.getCardValue() === 6))
+      if (otherCard.value === 7 && (card.value === 5 || card.value === 6))
         return false;
       return true;
     }
-    const selectedCardValue = this.props.selectedCard.getCardValue();
+    const selectedCardValue = this.props.selectedCard.value;
     if (selectedCardValue === 1 || selectedCardValue === 2 || selectedCardValue === 3 || selectedCardValue === 5 || selectedCardValue === 6) {
       if (isCurrentPlayer && (selectedCardValue === 5 && this.props.selectedCard.id === card.id)) return true;
       if (isCurrentPlayer || player.protected) return false;
@@ -53,7 +53,7 @@ class PlayerComponent extends React.Component {
           </div>
           <div>Hand</div>
           <div className="hand">
-          {player.card ? (
+          {player.card && !player.eliminated ? (
             <CardComponent 
               card={player.card}
               moves={this.props.moves}
@@ -62,7 +62,7 @@ class PlayerComponent extends React.Component {
               playCard={this.props.playCard}
               player={player}
               />) : "" }
-            {player.newCard ? (
+            {player.newCard && !player.eliminated ? (
             <CardComponent 
               card={player.newCard}
               moves={this.props.moves}
