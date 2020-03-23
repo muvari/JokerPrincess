@@ -36,31 +36,31 @@ body {
   box-shadow: 0px 0px 9px 5px rgba(231,166,26,1);
 }
 .zero {
-  background-color: #999;
+  background-color: #7f8c8d;
 }
 .one {
-  background-color: #5e4fa2;
+  background-color: #AC54A0;
 }
 .two {
-  background-color: #3288bd;
+  background-color: #0053AE;
 }
 .three {
-  background-color: #66c2a5;
+  background-color: #15AADC;
 }
 .four {
-  background-color: #abdda4;
+  background-color: #5B9F49;
 }
 .five {
-  background-color: #fecf3b;
+  background-color: #FFB92F;
 }
 .six {
-  background-color: #ec9800;
+  background-color: #FF8833;
 }
 .seven {
-  background-color: #dd531e;
+  background-color: #D5202A;
 }
 .eight {
-  background-color: #b10909;
+  background-color: #ff073a;
 }
 .info {
   min-width: 40px;
