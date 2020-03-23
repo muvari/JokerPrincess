@@ -32,6 +32,8 @@ class PlayerComponent extends React.Component {
   shouldHide(card) {
     const player = this.props.player;
     const isCurrentPlayer = this.props.currentPlayer === player.id.toString();
+    if (this.props.visibleCard && this.props.currentPlayer === this.props.visibleCard.id.toString() && this.props.visibleCard.cardId === card.id)
+      return false;
     return !isCurrentPlayer;
   }
 
@@ -66,7 +68,7 @@ class PlayerComponent extends React.Component {
             <CardComponent 
               card={player.newCard}
               moves={this.props.moves}
-              hide={this.shouldHide(player.card)}
+              hide={this.shouldHide(player.newCard)}
               highlight={this.shouldHighlight(player.newCard)}
               playCard={this.props.playCard}
               player={player}

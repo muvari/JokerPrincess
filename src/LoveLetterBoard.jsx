@@ -61,6 +61,7 @@ class LoveLetterBoard extends React.Component {
         currentPlayer={this.props.playerID}
         selectedCard={this.state.selectedCard}
         playCard={this.playCard}
+        visibleCard={this.props.G.visibleCard}
       />);
     }
 

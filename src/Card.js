@@ -18,6 +18,8 @@ export const oneAction = (G, ctx, playData, otherCard) => {
 }
 
 export const twoAction = (G, ctx, playData, otherCard) => {
+  const actionPlayer = G.players[playData.actionPlayerId];
+  G.visibleCard = { id: ctx.currentPlayer, cardId: actionPlayer.card.id };
 }
 
 export const threeAction = (G, ctx, playData, otherCard) => {
@@ -53,6 +55,7 @@ export const sixAction = (G, ctx, playData, otherCard) => {
 }
 
 export const sevenAction = (G, ctx, playData, otherCard) => {
+  // DO nothing
 }
 
 export const eightAction = (G, ctx) => {

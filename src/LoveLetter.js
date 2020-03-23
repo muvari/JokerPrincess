@@ -15,6 +15,7 @@ const playCard = (G, ctx, playData) => {
   const isOldCard = player.card && player.card.id === playData.id;
   const selectedCard = isOldCard ? player.card : player.newCard;
   const otherCard = !isOldCard ? player.card : player.newCard;
+  G.visibleCard = undefined;
 
   // Run card action
   Card.cardActions[Card.cardValuesById[playData.id]](G, ctx, playData, otherCard);
@@ -39,6 +40,7 @@ export const LoveLetter = {
     eligible: [],
     lastWin: 0,
     history: [],
+    visibleCard: undefined,
   }),
 
   playerView: (G, ctx, playerID) => { 
