@@ -9,7 +9,8 @@ const drawCard = (G, ctx) => {
     player.newCard = G.deck.pop();
 }
 
-const playCard = (G, ctx, playData) => {
+const playCard = (G, ctx, playData) => {  
+  // if (typeof window !== 'undefined') return;
   const player = G.players[ctx.currentPlayer];
   const isOldCard = player.card && player.card.id === playData.id;
   const selectedCard = isOldCard ? player.card : player.newCard;
@@ -37,7 +38,7 @@ export const LoveLetter = {
     hiddenCard: undefined,
     eligible: [],
     lastWin: 0,
-    history: []
+    history: [],
   }),
 
   playerView: (G, ctx, playerID) => { 
@@ -93,7 +94,7 @@ export const LoveLetter = {
     onBegin: (G, ctx) => {
       G.players[ctx.currentPlayer].protected = false;
       drawCard(G, ctx);
-    }
+    },    
   },
 
   endIf: (G, ctx) => {

@@ -40,6 +40,16 @@ export const fiveAction = (G, ctx, playData, otherCard) => {
 }
 
 export const sixAction = (G, ctx, playData, otherCard) => {
+  const player = G.players[ctx.currentPlayer];
+  const actionPlayer = G.players[playData.actionPlayerId];
+
+  const cardCopy = Object.assign({}, otherCard);
+  const actionPlayerCard = Object.assign({}, actionPlayer.card);
+  actionPlayer.card = cardCopy;
+  if (otherCard.id === player.card.id)
+    player.card = actionPlayerCard;
+  else
+    player.newCard = actionPlayerCard;
 }
 
 export const sevenAction = (G, ctx, playData, otherCard) => {

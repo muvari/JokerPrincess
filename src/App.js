@@ -3,6 +3,7 @@ import './App.css';
 
 import { Client } from 'boardgame.io/react';
 import { Local } from 'boardgame.io/multiplayer';
+// import { SocketIO } from 'boardgame.io/multiplayer';
 import { LoveLetter } from './LoveLetter';
 import LoveLetterBoard from './LoveLetterBoard';
 
@@ -11,6 +12,7 @@ const LoveLetterClient = Client({
   board: LoveLetterBoard,
   numPlayers: 3,
   debug: true,
+  // multiplayer: SocketIO({ server: 'http://localhost:8000/' }),
   multiplayer: Local()
  });
 
