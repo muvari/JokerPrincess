@@ -48,7 +48,7 @@ class PlayerComponent extends React.Component {
 		return (
       <div className="player">
           <div className="playerInfo">
-          <div className={player.eliminated ? "elim" : ""}>Name: {player.id} {player.protected ? <i title="Protected" style={{color: "#abdda4"}} className="fas fa-shield-alt" /> : ""}</div>
+          <div className={player.eliminated ? "elim" : ""}>Name: {player.id} {player.protected ? <i title="Protected" style={{color: "#5B9F49"}} className="fas fa-shield-alt" /> : ""}</div>
             <div>Wins: {player.wins}/{this.props.requiredWins}</div>
           </div>
           <div>Hand</div>

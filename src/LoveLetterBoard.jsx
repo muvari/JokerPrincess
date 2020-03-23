@@ -25,9 +25,10 @@ class LoveLetterBoard extends React.Component {
       return;
     }
     
+    // Second click
     const selectedCardValue = this.state.selectedCard.getCardValue();
     if (selectedCardValue !== 1) {
-      this.props.moves.playCard({id: card.id, actionPlayerId: actionPlayer.id });
+      this.props.moves.playCard({id: this.state.selectedCard.id, actionPlayerId: actionPlayer.id });
       this.setState({selectedCard: undefined });
     }
   }
@@ -59,6 +60,7 @@ class LoveLetterBoard extends React.Component {
         requiredWins={this.props.G.requiredWins}
         currentPlayer={this.props.playerID}
         selectedCard={this.state.selectedCard}
+        playCard={this.playCard}
       />);
     }
 
