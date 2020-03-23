@@ -39,6 +39,24 @@ export const fourAction = (G, ctx) => {
 }
 
 export const fiveAction = (G, ctx, playData, otherCard) => {
+  const player = G.players[ctx.currentPlayer];
+  const actionPlayer = G.players[playData.actionPlayerId];
+  const card = (actionPlayer.id.toString() === ctx.currentPlayer) ? otherCard : actionPlayer.card;
+  if (card.value === 8) {
+    eliminatePlayer(G, ctx, actionPlayer);
+    return;
+  }
+  actionPlayer.discarded.push(card);
+
+  const newCard = G.deck.length > 0 ? G.deck.pop() : G.hiddenCard;
+  if (actionPlayer.id.toString() === ctx.currentPlayer) {
+    if (otherCard.id === player.card.id)
+      player.card = newCard;
+    else
+      player.newCard = newCard;
+  } else {
+    actionPlayer.card = newCard;
+  }
 }
 
 export const sixAction = (G, ctx, playData, otherCard) => {
@@ -55,7 +73,7 @@ export const sixAction = (G, ctx, playData, otherCard) => {
 }
 
 export const sevenAction = (G, ctx, playData, otherCard) => {
-  // DO nothing
+  // Do nothing
 }
 
 export const eightAction = (G, ctx) => {

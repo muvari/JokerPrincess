@@ -11,6 +11,8 @@ const drawCard = (G, ctx) => {
 
 const playCard = (G, ctx, playData) => {  
   // if (typeof window !== 'undefined') return;
+  //if (G.dumb[0].length % 2 !== 1) return;
+  //G.dumb[0]= {id: ctx.turn});
   const player = G.players[ctx.currentPlayer];
   const isOldCard = player.card && player.card.id === playData.id;
   const selectedCard = isOldCard ? player.card : player.newCard;
@@ -34,13 +36,14 @@ export const LoveLetter = {
   setup: (ctx) => ({
     round: 1,
     requiredWins: parseInt(13 / ctx.numPlayers) + 1,
-    players: Array(ctx.numPlayers).fill().map((_val, i) => (new Player(i))),
+    players: Array(ctx.numPlayers).fill().map((_val, i) => (Player(i))),
     deck: [].concat(Deck),
     hiddenCard: undefined,
     eligible: [],
     lastWin: 0,
     history: [],
     visibleCard: undefined,
+    dumb: [[{id: 0}]],
   }),
 
   playerView: (G, ctx, playerID) => { 
