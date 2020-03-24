@@ -1,7 +1,7 @@
 import { Player } from './Player';
 import * as Card from './Card';
 
-const Deck = Array(16).fill().map((_val, i) => (new Card.Card(i)));
+const Deck = () => { return Array(16).fill().map((_val, i) => (new Card.Card(i))) };
 
 const drawCard = (G, ctx) => {
   const player = G.players[ctx.currentPlayer];
@@ -37,13 +37,14 @@ export const LoveLetter = {
     round: 1,
     requiredWins: parseInt(13 / ctx.numPlayers) + 1,
     players: Array(ctx.numPlayers).fill().map((_val, i) => (Player(i))),
-    deck: [].concat(Deck),
+    deck: Deck(),
     hiddenCard: undefined,
     eligible: [],
     lastWin: 0,
     history: [],
+    lastAction: "Round 1 Begins",
     visibleCard: undefined,
-    dumb: [[{id: 0}]],
+    random: ctx.random,
   }),
 
   playerView: (G, ctx, playerID) => { 
@@ -58,29 +59,39 @@ export const LoveLetter = {
     round: {
       moves: { playCard },
       start: true,
+      next: "round",
       onBegin: (G, ctx) => {
         G.eligible = Array.from(Array(ctx.numPlayers).keys());
-        G.deck = [].concat(Deck);
-        G.deck = ctx.random.Shuffle(G.deck);
+        G.deck = Deck();
+        G.deck = G.random.Shuffle(G.deck);
         G.hiddenCard = G.deck.pop();
-        for (const player of G.players)
+        for (const player of G.players) {
           player.card = G.deck.pop();
+          player.newCard = undefined;
+          player.discarded = [];
+          player.eliminated = false;
+          player.protected = false;
+        }
       },
       onEnd: (G, ctx) => {
         G.round += 1;
-        if (G.eligible.length === 1)
+        if (G.eligible.length === 1) {
+          G.lastWin = G.players[G.eligible[0]].id;
           G.players[G.eligible[0]].wins += 1;
+        }
+        G.lastAction = `${G.lastWin} Wins! Round ${G.round} Begins.`
+        // ctx.events.setPhase("reset");
         // if (G.deck.length === 0) {
         //   let i = arr.indexOf(Math.max(...arr));
         // }
       },
-      endIf: (G) => {
-        if (G.eligible.length === 1)
-          return true;
-        if (G.deck.length === 0)
-          return true;
-        return false;
-      }
+      // endIf: (G) => {
+      //   if (G.eligible.length === 1)
+      //     return true;
+      //   if (G.deck.length === 0)
+      //     return true;
+      //   return false;
+      // }
     },
   },
 
@@ -99,11 +110,13 @@ export const LoveLetter = {
     onBegin: (G, ctx) => {
       G.players[ctx.currentPlayer].protected = false;
       drawCard(G, ctx);
-    },    
+    },
+    onEnd: (G, ctx) => {
+      if (G.eligible.length === 1)
+        ctx.events.endPhase();
+    }
   },
 
   endIf: (G, ctx) => {
-    if (false)
-      return { };
   },
 };

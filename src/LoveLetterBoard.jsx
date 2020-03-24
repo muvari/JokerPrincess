@@ -42,7 +42,7 @@ class LoveLetterBoard extends React.Component {
   }
 
   getInstructions() {
-    if (this.props.ctx.currentPlayer !== this.props.playerID) return "Wait...";
+    if (this.props.ctx.currentPlayer !== this.props.playerID) return "Wait for your turn...";
     if (!this.state.selectedCard) return "Select a card.";
     const selectedCardValue = this.state.selectedCard.value;
     if (selectedCardValue === 1) {
@@ -96,8 +96,10 @@ class LoveLetterBoard extends React.Component {
         <div className="gameInfo">
             <div>Round: {this.props.G.round}</div>
             <div>Turn: {this.props.ctx.currentPlayer}</div>
+            <div>Last Action: {this.props.G.lastAction}</div>
             <div>Instructions: {this.getInstructions()}</div>
         </div>
+        <div className="others">{otherPlayers}</div>
         <PlayerComponent
           player={this.props.G.players[this.props.playerID]}
           moves={this.props.moves}
@@ -110,7 +112,6 @@ class LoveLetterBoard extends React.Component {
         <div className="player" style={{ flexDirection: "row", justifyContent: "space-between"}}>
           {guesses}
         </div> : ''  }
-        <div className="others">{otherPlayers}</div>
       </div>
     );
   }
