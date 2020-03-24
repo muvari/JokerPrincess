@@ -20,8 +20,12 @@ class LoveLetterBoard extends React.Component {
   playCard(card, actionPlayer) {
     // First click
     if (!this.state.selectedCard) {
+      const numOptions = document.getElementsByClassName("highlight").length;
       if (card.value === 4 || card.value === 8 || card.value === 7) {
-        this.props.moves.playCard({id: card.id});
+        this.props.moves.playCard({id: card.id });
+        return;
+      } else if (numOptions === 0) {
+        this.props.moves.playCard({id: card.id, noOptions: true });
         return;
       }
       this.setState({selectedCard: card});

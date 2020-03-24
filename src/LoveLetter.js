@@ -11,8 +11,6 @@ const drawCard = (G, ctx) => {
 
 const playCard = (G, ctx, playData) => {  
   // if (typeof window !== 'undefined') return;
-  //if (G.dumb[0].length % 2 !== 1) return;
-  //G.dumb[0]= {id: ctx.turn});
   const player = G.players[ctx.currentPlayer];
   const isOldCard = player.card && player.card.id === playData.id;
   const selectedCard = isOldCard ? player.card : player.newCard;
@@ -20,7 +18,8 @@ const playCard = (G, ctx, playData) => {
   G.visibleCard = undefined;
 
   // Run card action
-  Card.cardActions[Card.cardValuesById[playData.id]](G, ctx, playData, otherCard);
+  if (!playData.noOptions)
+    Card.cardActions[Card.cardValuesById[playData.id]](G, ctx, playData, otherCard);
   
   if (!player.eliminated) {  
     if (selectedCard)
@@ -78,20 +77,43 @@ export const LoveLetter = {
         if (G.eligible.length === 1) {
           G.lastWin = G.players[G.eligible[0]].id;
           G.players[G.eligible[0]].wins += 1;
+        } else if (G.deck.length === 0) {
+          let winners = [];
+          let value = -1;
+          for (let i = 0; i < G.players.length; i++) {
+            if (G.players[i].eliminated) 
+              continue;
+
+            if (G.players[i].card.value > value) {
+              value = G.players[i].card.value;
+              winners = [G.players[i]];
+            } else if (G.players[i].card.value > value) {
+              winners.push(G.players[i]);
+            }
+          }
+
+          if (winners.length === 1) {
+            G.lastWin = winners[0].id;
+            winners[0].wins += 1;
+          } else {
+            // Calculate discarded points
+            let doubleWinner;
+            let highestSum = -1;
+            for (const p of winners) {
+              const sum = p.discarded.reduce((acc, card) => (acc + card.value));
+              if (sum > highestSum) {
+                highestSum = sum;
+                doubleWinner = p;
+              }
+            }
+
+            G.lastWin = doubleWinner;
+            doubleWinner.wins += 1;
+          }
+
         }
         G.lastAction = `${G.lastWin} Wins! Round ${G.round} Begins.`
-        // ctx.events.setPhase("reset");
-        // if (G.deck.length === 0) {
-        //   let i = arr.indexOf(Math.max(...arr));
-        // }
       },
-      // endIf: (G) => {
-      //   if (G.eligible.length === 1)
-      //     return true;
-      //   if (G.deck.length === 0)
-      //     return true;
-      //   return false;
-      // }
     },
   },
 
@@ -114,9 +136,15 @@ export const LoveLetter = {
     onEnd: (G, ctx) => {
       if (G.eligible.length === 1)
         ctx.events.endPhase();
+      if (G.deck.length === 0)
+        ctx.events.endPhase();
     }
   },
 
   endIf: (G, ctx) => {
+    if (G.players.some((p) => p.wins === G.requiredWins)) {
+      const winner = G.players.filter((p) => p.wins === G.requiredWins)[0];
+      return { winner: winner.id}
+    }
   },
 };
