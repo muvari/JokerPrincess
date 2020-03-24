@@ -15,6 +15,7 @@ class LoveLetterBoard extends React.Component {
     }
 
     this.playCard = this.playCard.bind(this);
+    this.startNextRound = this.startNextRound.bind(this);
   }
 
   playCard(card, actionPlayer) {
@@ -48,6 +49,10 @@ class LoveLetterBoard extends React.Component {
     }
   }
 
+  startNextRound() {
+    this.props.moves.nextRound();
+  }
+
   getInstructions() {
     if (this.props.ctx.currentPlayer !== this.props.playerID) return "Wait for your turn...";
     if (!this.state.selectedCard) return "Select a card.";
@@ -77,6 +82,7 @@ class LoveLetterBoard extends React.Component {
         player={player}
         requiredWins={this.props.G.requiredWins}
         currentPlayer={this.props.playerID}
+        currentTurn={this.props.ctx.currentPlayer}
         selectedCard={this.state.selectedCard}
         playCard={this.playCard}
         visibleCard={this.props.G.visibleCard}
@@ -105,25 +111,28 @@ class LoveLetterBoard extends React.Component {
             <div>Turn: {this.props.ctx.currentPlayer}</div>
             <div>Deck: {this.props.G.deck.length} cards left</div>
             <div>Last Action: {this.props.G.lastAction}</div>
+            { this.props.ctx.phase === "reset" ? <div><button type="button" disabled={this.props.playerID !== this.props.ctx.currentPlayer} onClick={this.startNextRound} class="btn btn-primary">Next Round</button></div>: "" }
             { this.props.ctx.numPlayers === 2 && this.props.G.deckDiscard.length === 3 ? 
-            <div className="player" style={{ flexDirection: "row", justifyContent: "space-between"}}>
-              <CardComponent 
-                  card={this.props.G.deckDiscard[0]}
-                  hide={false}
-                  highlight={false}
-                  />
+            <React.Fragment>
+              <b>Discarded</b>
+              <div className="player" style={{ flexDirection: "row", justifyContent: "space-between"}}>
                 <CardComponent 
-                  card={this.props.G.deckDiscard[1]}
-                  hide={false}
-                  highlight={false}
-                  />
-                <CardComponent 
-                  card={this.props.G.deckDiscard[2]}
-                  hide={false}
-                  highlight={false}
-                  />
-            </div> : "" }
-            <div>Instructions: {this.getInstructions()}</div>
+                    card={this.props.G.deckDiscard[0]}
+                    hide={false}
+                    highlight={false}
+                    />
+                  <CardComponent 
+                    card={this.props.G.deckDiscard[1]}
+                    hide={false}
+                    highlight={false}
+                    />
+                  <CardComponent 
+                    card={this.props.G.deckDiscard[2]}
+                    hide={false}
+                    highlight={false}
+                    />
+              </div>
+            </React.Fragment> : "" }
         </div>
         <div>Opponents</div>
         <div className="others">{otherPlayers}</div>
@@ -134,7 +143,10 @@ class LoveLetterBoard extends React.Component {
           currentPlayer={this.props.playerID}
           playCard={this.playCard}
           selectedCard={this.state.selectedCard}
+          currentTurn={this.props.ctx.currentPlayer}
+          phase={this.props.ctx.phase}
         />
+        <div>Instructions: {this.getInstructions()}</div>
         {this.state.showGuessModal ? 
         <div className="player" style={{ flexDirection: "row", justifyContent: "space-between"}}>
           {guesses}

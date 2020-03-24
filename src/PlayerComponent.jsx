@@ -6,7 +6,7 @@ class PlayerComponent extends React.Component {
 
   shouldHighlight(card) {
     const player = this.props.player;
-    if (player.eliminated) 
+    if (player.eliminated || this.props.phase === "reset") 
       return false;
     const isCurrentPlayer = this.props.currentPlayer === player.id.toString();
     const bothCards = player.card && player.newCard;
@@ -39,6 +39,7 @@ class PlayerComponent extends React.Component {
 
 	render() {
     const player = this.props.player;
+    const isCurrentTurn = this.props.currentTurn === player.id.toString();
     const discarded = [];
     for (const played of player.discarded) {
       discarded.push(
@@ -57,7 +58,7 @@ class PlayerComponent extends React.Component {
       stars.push(star);
     }
 		return (
-      <div className="player">
+      <div className="player" style={{backgroundColor: isCurrentTurn ? "#fff" : "#f8f8f8" }}>
           <div className="playerInfo">
           <div className={player.eliminated ? "elim" : ""}>Name: {player.id} {player.protected ? <i title="Protected" style={{color: "#5B9F49"}} className="fas fa-shield-alt" /> : ""}</div>
             <div>Wins: {stars}</div>

@@ -31,9 +31,13 @@ const playCard = (G, ctx, playData) => {
   ctx.events.endTurn();
 }
 
+const nextRound = (G, ctx) => {
+  ctx.events.endPhase();
+}
+
 export const LoveLetter = {
   setup: (ctx) => ({
-    round: 1,
+    round: 0,
     requiredWins: parseInt(13 / ctx.numPlayers) + 1,
     players: Array(ctx.numPlayers).fill().map((_val, i) => (Player(i))),
     deck: Deck(),
@@ -42,7 +46,7 @@ export const LoveLetter = {
     eligible: [],
     lastWin: 0,
     history: [],
-    lastAction: "Round 1 Begins",
+    lastAction: "Begin Round 1",
     visibleCard: undefined,
     random: ctx.random,
   }),
@@ -59,8 +63,10 @@ export const LoveLetter = {
     round: {
       moves: { playCard },
       start: true,
-      next: "round",
+      next: "reset",
       onBegin: (G, ctx) => {
+        G.round += 1;
+        G.lastAction = `Begin Round ${G.round}`;
         G.eligible = Array.from(Array(ctx.numPlayers).keys());
         G.deck = Deck();
         G.deck = G.random.Shuffle(G.deck);
@@ -80,7 +86,6 @@ export const LoveLetter = {
         }
       },
       onEnd: (G, ctx) => {
-        G.round += 1;
         if (G.eligible.length === 1) {
           G.lastWin = G.players[G.eligible[0]].id;
           G.players[G.eligible[0]].wins += 1;
@@ -119,9 +124,14 @@ export const LoveLetter = {
           }
 
         }
-        G.lastAction = `${G.lastWin} Wins! Round ${G.round} Begins.`
+        G.lastAction = `${G.lastWin} Wins!`
       },
     },
+
+    reset: {
+      moves: { nextRound },
+      next: "round"
+    }
   },
 
   turn: {
