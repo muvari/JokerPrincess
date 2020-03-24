@@ -14,7 +14,10 @@ export const eliminatePlayer= (G, ctx, player) => {
   player.eliminated = true;
 }
 
-export const oneAction = (G, ctx, playData, otherCard) => {
+export const oneAction = (G, ctx, playData) => {
+  const actionPlayer = G.players[playData.actionPlayerId];
+  if (actionPlayer.card.value === playData.guessCardValue)
+    eliminatePlayer(G, ctx, actionPlayer);
 }
 
 export const twoAction = (G, ctx, playData, otherCard) => {

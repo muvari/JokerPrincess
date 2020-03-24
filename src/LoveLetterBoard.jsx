@@ -1,5 +1,6 @@
 import React from 'react';
 import PlayerComponent from './PlayerComponent';
+import CardComponent from './CardComponent';
 
 class LoveLetterBoard extends React.Component {
 
@@ -8,7 +9,9 @@ class LoveLetterBoard extends React.Component {
 
     this.state = {
       selectedCard: undefined,
+      guessCardValue: undefined,
       showGuessModal: false,
+      actionPlayer: undefined,
     }
 
     this.playCard = this.playCard.bind(this);
@@ -30,6 +33,11 @@ class LoveLetterBoard extends React.Component {
     if (selectedCardValue !== 1) {
       this.props.moves.playCard({id: this.state.selectedCard.id, actionPlayerId: actionPlayer.id });
       this.setState({selectedCard: undefined });
+    } else if (!this.state.showGuessModal) {
+      this.setState({showGuessModal: true, actionPlayer: actionPlayer });
+    } else { // Third click?
+      this.props.moves.playCard({id: this.state.selectedCard.id, actionPlayerId: this.state.actionPlayer.id, guessCardValue: card.value });
+      this.setState({showGuessModal: false, selectedCard: undefined, actionPlayer: undefined });
     }
   }
 
@@ -37,8 +45,11 @@ class LoveLetterBoard extends React.Component {
     if (this.props.ctx.currentPlayer !== this.props.playerID) return "Wait...";
     if (!this.state.selectedCard) return "Select a card.";
     const selectedCardValue = this.state.selectedCard.value;
-    if (selectedCardValue === 1)
+    if (selectedCardValue === 1) {
+      if (this.state.showGuessModal)
+        return "Select a value to guess"
       return "Select a card to guess."
+    }
     else if (selectedCardValue === 2)
       return "Select a card to view."
     else if (selectedCardValue === 3)
@@ -65,6 +76,18 @@ class LoveLetterBoard extends React.Component {
       />);
     }
 
+    const guesses = [];
+    if (this.state.showGuessModal) {
+      for (let i = 2; i <= 8; i++) {
+        guesses.push(<CardComponent 
+                  card={{id: `g-${i}`, value: i}}
+                  hide={false}
+                  highlight={true}
+                  playCard={this.playCard}
+                  />)
+        }
+    }
+
     return (
       <div className="board">
         <div>
@@ -75,9 +98,6 @@ class LoveLetterBoard extends React.Component {
             <div>Turn: {this.props.ctx.currentPlayer}</div>
             <div>Instructions: {this.getInstructions()}</div>
         </div>
-        <div className="deck">
-
-        </div>
         <PlayerComponent
           player={this.props.G.players[this.props.playerID]}
           moves={this.props.moves}
@@ -86,6 +106,10 @@ class LoveLetterBoard extends React.Component {
           playCard={this.playCard}
           selectedCard={this.state.selectedCard}
         />
+        {this.state.showGuessModal ? 
+        <div className="player" style={{ flexDirection: "row", justifyContent: "space-between"}}>
+          {guesses}
+        </div> : ''  }
         <div className="others">{otherPlayers}</div>
       </div>
     );
