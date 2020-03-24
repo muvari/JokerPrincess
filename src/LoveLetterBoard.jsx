@@ -86,6 +86,7 @@ class LoveLetterBoard extends React.Component {
         selectedCard={this.state.selectedCard}
         playCard={this.playCard}
         visibleCard={this.props.G.visibleCard}
+        phase={this.props.ctx.phase}
       />);
     }
 
@@ -107,6 +108,7 @@ class LoveLetterBoard extends React.Component {
           <h1 className="info-text">Love Letter</h1>
         </div>
         <div className="gameInfo">
+          { this.props.ctx.gameover ? <div><h2>{this.props.ctx.gameover.message}</h2></div>: "" }
             <div>Round: {this.props.G.round}</div>
             <div>Turn: {this.props.ctx.currentPlayer}</div>
             <div>Deck: {this.props.G.deck.length} cards left</div>

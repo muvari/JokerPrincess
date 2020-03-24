@@ -30,6 +30,9 @@ class PlayerComponent extends React.Component {
   }
 
   shouldHide(card) {
+    if (this.props.phase === "reset") 
+      return false;
+
     const player = this.props.player;
     const isCurrentPlayer = this.props.currentPlayer === player.id.toString();
     if (this.props.visibleCard && this.props.currentPlayer === this.props.visibleCard.id.toString() && this.props.visibleCard.cardId === card.id)
