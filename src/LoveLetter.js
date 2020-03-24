@@ -18,8 +18,12 @@ const playCard = (G, ctx, playData) => {
   G.visibleCard = undefined;
 
   // Run card action
+  
+  G.lastAction = `${player.id} plays '${Card.cardValuesById[playData.id]}' card.`
   if (!playData.noOptions)
     Card.cardActions[Card.cardValuesById[playData.id]](G, ctx, playData, otherCard);
+  else
+    G.lastAction += " Has no eligible options."
   
   if (!player.eliminated) {  
     if (selectedCard)
@@ -45,7 +49,6 @@ export const LoveLetter = {
     deckDiscard: [],
     eligible: [],
     lastWin: 0,
-    history: [],
     lastAction: "Begin Round 1",
     visibleCard: undefined,
     random: ctx.random,
@@ -88,7 +91,9 @@ export const LoveLetter = {
       onEnd: (G, ctx) => {
         if (G.eligible.length === 1) {
           G.lastWin = G.players[G.eligible[0]].id;
-          G.players[G.eligible[0]].wins += 1;
+          G.players[G.eligible[0]].wins += 1;          
+          G.lastAction = `${G.lastWin} Wins Round! (Only remaining player)`;
+          return;
         } else if (G.deck.length === 0) {
           let winners = [];
           let value = -1;
@@ -106,7 +111,9 @@ export const LoveLetter = {
 
           if (winners.length === 1) {
             G.lastWin = winners[0].id;
-            winners[0].wins += 1;
+            winners[0].wins += 1;          
+            G.lastAction = `${G.lastWin} Wins Round! (Highest card ${value})`;
+            return;
           } else {
             // Calculate discarded points
             let doubleWinner;
@@ -120,11 +127,12 @@ export const LoveLetter = {
             }
 
             G.lastWin = doubleWinner;
-            doubleWinner.wins += 1;
+            doubleWinner.wins += 1;          
+            G.lastAction = `${G.lastWin} Wins Round! (Highest card ${value} and highest sum of discarded cards (${highestSum}))`;
+            return;
           }
 
         }
-        G.lastAction = `${G.lastWin} Wins!`
       },
     },
 
@@ -148,6 +156,8 @@ export const LoveLetter = {
     },
     onBegin: (G, ctx) => {
       G.players[ctx.currentPlayer].protected = false;
+      if (G.eligible.length < 2 || G.deck.length < 1)
+        return;
       drawCard(G, ctx);
     },
     onEnd: (G, ctx) => {
