@@ -10,7 +10,7 @@ import LoveLetterBoard from './LoveLetterBoard';
 const LoveLetterClient = Client({ 
   game: LoveLetter, 
   board: LoveLetterBoard,
-  numPlayers: 3,
+  numPlayers: 2,
   debug: true,
   // multiplayer: SocketIO({ server: 'http://localhost:8000/' }),
   multiplayer: Local()
@@ -20,7 +20,6 @@ const LoveLetterClient = Client({
   <div>
     <LoveLetterClient playerID="0" />
     <LoveLetterClient playerID="1" />
-    <LoveLetterClient playerID="2" />
   </div>
 );
 

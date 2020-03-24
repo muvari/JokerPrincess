@@ -20,15 +20,18 @@ class LoveLetterBoard extends React.Component {
   playCard(card, actionPlayer) {
     // First click
     if (!this.state.selectedCard) {
-      const numOptions = document.getElementsByClassName("highlight").length;
-      if (card.value === 4 || card.value === 8 || card.value === 7) {
-        this.props.moves.playCard({id: card.id });
-        return;
-      } else if (numOptions === 0) {
-        this.props.moves.playCard({id: card.id, noOptions: true });
-        return;
-      }
-      this.setState({selectedCard: card});
+      this.setState({selectedCard: card}, () => {
+        const numOptions = document.getElementsByClassName("highlight").length;
+        if (card.value === 4 || card.value === 8 || card.value === 7) {
+          this.props.moves.playCard({id: card.id });        
+          this.setState({selectedCard: undefined});
+          return;
+        } else if (numOptions === 0) {
+          this.props.moves.playCard({id: card.id, noOptions: true });        
+          this.setState({selectedCard: undefined});
+          return;
+        }
+      });
       return;
     }
     
@@ -100,9 +103,29 @@ class LoveLetterBoard extends React.Component {
         <div className="gameInfo">
             <div>Round: {this.props.G.round}</div>
             <div>Turn: {this.props.ctx.currentPlayer}</div>
+            <div>Deck: {this.props.G.deck.length} cards left</div>
             <div>Last Action: {this.props.G.lastAction}</div>
+            { this.props.ctx.numPlayers === 2 && this.props.G.deckDiscard.length === 3 ? 
+            <div className="player" style={{ flexDirection: "row", justifyContent: "space-between"}}>
+              <CardComponent 
+                  card={this.props.G.deckDiscard[0]}
+                  hide={false}
+                  highlight={false}
+                  />
+                <CardComponent 
+                  card={this.props.G.deckDiscard[1]}
+                  hide={false}
+                  highlight={false}
+                  />
+                <CardComponent 
+                  card={this.props.G.deckDiscard[2]}
+                  hide={false}
+                  highlight={false}
+                  />
+            </div> : "" }
             <div>Instructions: {this.getInstructions()}</div>
         </div>
+        <div>Opponents</div>
         <div className="others">{otherPlayers}</div>
         <PlayerComponent
           player={this.props.G.players[this.props.playerID]}

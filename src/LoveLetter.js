@@ -38,6 +38,7 @@ export const LoveLetter = {
     players: Array(ctx.numPlayers).fill().map((_val, i) => (Player(i))),
     deck: Deck(),
     hiddenCard: undefined,
+    deckDiscard: [],
     eligible: [],
     lastWin: 0,
     history: [],
@@ -64,6 +65,12 @@ export const LoveLetter = {
         G.deck = Deck();
         G.deck = G.random.Shuffle(G.deck);
         G.hiddenCard = G.deck.pop();
+        if (ctx.numPlayers === 2) {
+          G.deckDiscard = [];
+          G.deckDiscard.push(G.deck.pop());
+          G.deckDiscard.push(G.deck.pop());
+          G.deckDiscard.push(G.deck.pop());
+        }
         for (const player of G.players) {
           player.card = G.deck.pop();
           player.newCard = undefined;
