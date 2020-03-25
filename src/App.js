@@ -27,7 +27,7 @@ import LoveLetterBoard from './LoveLetterBoard';
       game: LoveLetter, 
       board: LoveLetterBoard,
     }]}
-  />;
+  />
   </div>
 );
 
