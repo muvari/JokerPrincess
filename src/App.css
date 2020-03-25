@@ -30,6 +30,11 @@ body {
   -ms-user-select: none; 
   user-select: none;
 }
+.mini {
+  color: white;
+  padding: 0 2px;
+  border: 1px solid black;
+}
 #lobby-view {
   display: flex;
   flex-direction: column;
@@ -87,6 +92,14 @@ body {
 .info-text {
   text-align: center;
   font-weight: 700;
+  margin: 0 4px;
+}
+.question {
+  display: flex;
+  width: 30px;
+  height: 30px;
+  align-items: center;
+  justify-content: center;
 }
 .hand {
   margin-top: 4px;

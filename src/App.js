@@ -2,23 +2,32 @@ import React from 'react';
 import './App.css';
 
 // import { Client } from 'boardgame.io/react';
-// import { Local } from 'boardgame.io/multiplayer';
 import { Lobby } from 'boardgame.io/react';
 import { LoveLetter } from './LoveLetter';
 import LoveLetterBoard from './LoveLetterBoard';
+import { HelpButton } from './HelpButton';
 
 // const LoveLetterClient = Client({ 
 //   game: LoveLetter, 
 //   board: LoveLetterBoard, 
 //   numPlayers: 2,
 //   debug: true,
-//   multiplayer: Local(),
+//   multiplayer: false,
 //  });
+
+// const App = () => (
+//   <div>
+//      <div style={{display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
+//           <h1 className="info-text">Joker Princess</h1><HelpButton />
+//     </div>
+//     <LoveLetterClient playerID="0" />
+//   </div>
+// );
 
  const App = () => (
   <div>
-     <div>
-          <h1 className="info-text">Joker Princess</h1>
+     <div style={{display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
+          <h1 className="info-text">Joker Princess</h1><HelpButton />
     </div>
     <Lobby
       gameServer={`https://${window.location.hostname}:443`}
