@@ -180,7 +180,7 @@ export const LoveLetter = {
   endIf: (G, ctx) => {
     if (G.players.some((p) => p.wins === G.requiredWins)) {
       const winner = G.players.filter((p) => p.wins === G.requiredWins)[0];
-      return { winner: winner.id, message: `Player: ${winner.id} WINS!!!`}
+      return { winner: winner.id, message: `Player: ${G.gameMetadata[winner.id].name} WINS!!!`}
     }
   },
 };

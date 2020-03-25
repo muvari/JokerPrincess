@@ -34,9 +34,13 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 20px !important;
 }
 #instances {
   width: 500px;
+}
+#game-creation > * {
+  margin: 0 4px;
 }
 .hidden {
   display: none;
