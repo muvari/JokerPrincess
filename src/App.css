@@ -50,6 +50,9 @@ body {
 .hidden {
   display: none;
 }
+.gameInfo {
+  margin-bottom: 8px;
+}
 .highlight {
   -webkit-box-shadow: 0px 0px 9px 5px rgba(231,166,26,1);
   -moz-box-shadow: 0px 0px 9px 5px rgba(231,166,26,1);
@@ -124,12 +127,13 @@ body {
   display: flex;
   align-items: center;
   flex-direction: column;
+  margin: 16px;
 }
 .others {
   display: flex;
   justify-content: center;
   flex-direction: row;
-  margin-top: 20px;
+  margin-bottom: 20px;
 }
 .elim {
   color: #9e0142;

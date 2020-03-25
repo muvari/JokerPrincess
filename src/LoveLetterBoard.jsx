@@ -112,10 +112,10 @@ class LoveLetterBoard extends React.Component {
       <div className="board">
         <div className="gameInfo">
           { this.props.ctx.gameover ? <div><h2>{this.props.ctx.gameover.message}</h2></div>: "" }
+            <div><b>{this.props.G.lastAction}</b></div>
             <div>Round: {this.props.G.round}</div>
             <div>Turn: {this.props.G.gameMetadata ? this.props.G.gameMetadata[this.props.ctx.currentPlayer].name : this.props.ctx.currentPlayer}</div>
             <div>Deck: {this.props.G.deck.length} cards left</div>
-            <div><b>{this.props.G.lastAction}</b></div>
             { this.props.ctx.phase === "reset" ? <div><button type="button" disabled={this.props.playerID !== this.props.ctx.currentPlayer} onClick={this.startNextRound} class="btn btn-primary">Next Round</button></div>: "" }
             { this.props.ctx.numPlayers === 2 && this.props.G.deckDiscard.length === 3 ? 
             <React.Fragment>
