@@ -43,6 +43,7 @@ class PlayerComponent extends React.Component {
 	render() {
     const player = this.props.player;
     const isCurrentTurn = this.props.currentTurn === player.id.toString();
+    const isCurrentPlayer = this.props.currentPlayer === player.id.toString();
     const discarded = [];
     for (const played of player.discarded) {
       discarded.push(
@@ -66,6 +67,11 @@ class PlayerComponent extends React.Component {
           <div className={player.eliminated ? "elim" : ""}>Name: {this.props.playerName} {player.protected ? <i title="Protected" style={{color: "#5B9F49"}} className="fas fa-shield-alt" /> : ""}</div>
             <div>Wins: {stars}</div>
           </div>
+          { isCurrentPlayer ? 
+          <React.Fragment>
+            <div><b>Played Cards</b></div>
+              <div className="hand">{discarded}</div>
+              </React.Fragment> : "" }
           <div><b>Hand</b></div>
           <div className="hand">
           {player.card && !player.eliminated ? (
@@ -87,8 +93,11 @@ class PlayerComponent extends React.Component {
               player={player}
             />) : "" }
           </div>
-          <div><b>Played Cards</b></div>
-          <div className="hand">{discarded}</div>
+          { !isCurrentPlayer ? 
+          <React.Fragment>
+            <div><b>Played Cards</b></div>
+              <div className="hand">{discarded}</div>
+              </React.Fragment> : "" }
         </div>
 		)
 	}

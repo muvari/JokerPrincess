@@ -112,7 +112,7 @@ class LoveLetterBoard extends React.Component {
       <div className="board">
         <div className="gameInfo">
           { this.props.ctx.gameover ? <div><h2>{this.props.ctx.gameover.message}</h2></div>: "" }
-            <div><b>{this.props.G.lastAction}</b></div>
+            <div style={{width: "500px"}}><b>{this.props.G.lastAction}</b></div>
             <div>Round: {this.props.G.round}</div>
             <div>Turn: {this.props.G.gameMetadata ? this.props.G.gameMetadata[this.props.ctx.currentPlayer].name : this.props.ctx.currentPlayer}</div>
             <div>Deck: {this.props.G.deck.length} cards left</div>

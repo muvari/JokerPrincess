@@ -98,7 +98,7 @@ export const LoveLetter = {
         if (G.eligible.length === 1) {
           G.lastWin = G.players[G.eligible[0]].id;
           G.players[G.eligible[0]].wins += 1;          
-          G.lastAction = `${G.gameMetadata[G.lastWin].name} Wins Round! (Only remaining player)`;
+          G.lastAction += `...${G.gameMetadata[G.lastWin].name} Wins Round!`;
           return;
         } else if (G.deck.length === 0) {
           let winners = [];
