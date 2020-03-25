@@ -66,7 +66,7 @@ class PlayerComponent extends React.Component {
           <div className={player.eliminated ? "elim" : ""}>Name: {this.props.playerName} {player.protected ? <i title="Protected" style={{color: "#5B9F49"}} className="fas fa-shield-alt" /> : ""}</div>
             <div>Wins: {stars}</div>
           </div>
-          <div>Hand</div>
+          <div><b>Hand</b></div>
           <div className="hand">
           {player.card && !player.eliminated ? (
             <CardComponent 
@@ -87,7 +87,7 @@ class PlayerComponent extends React.Component {
               player={player}
             />) : "" }
           </div>
-          <div>Played Cards</div>
+          <div><b>Played Cards</b></div>
           <div className="hand">{discarded}</div>
         </div>
 		)
