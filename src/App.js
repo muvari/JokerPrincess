@@ -21,8 +21,8 @@ import LoveLetterBoard from './LoveLetterBoard';
           <h1 className="info-text">Love Letter</h1>
     </div>
     <Lobby
-      gameServer={`http://${window.location.hostname}:8000`}
-      lobbyServer={`http://${window.location.hostname}:8000`}
+      gameServer={`https://${window.location.hostname}:8000`}
+      lobbyServer={`https://${window.location.hostname}:8000`}
       gameComponents={[{ 
       game: LoveLetter, 
       board: LoveLetterBoard,
