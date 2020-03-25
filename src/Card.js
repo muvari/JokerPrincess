@@ -12,19 +12,19 @@ export const eliminatePlayer= (G, ctx, player) => {
   if (player.newCard && !player.discarded.some((d) => d.id === player.newCard.id))
     player.discarded.push(player.newCard);
   player.eliminated = true;
-  G.lastAction += ` - Player ${player.id} Eliminated!`;
+  G.lastAction += ` - Player ${G.gameMetadata[player.id].name} Eliminated!`;
 }
 
 export const oneAction = (G, ctx, playData) => {
   const actionPlayer = G.players[playData.actionPlayerId];
-  G.lastAction += ` Guesses ${actionPlayer.id} has '${playData.guessCardValue}' card .`
+  G.lastAction += ` Guesses ${G.gameMetadata[actionPlayer.id].name} has '${playData.guessCardValue}' card .`
   if (actionPlayer.card.value === playData.guessCardValue)
     eliminatePlayer(G, ctx, actionPlayer);
 }
 
 export const twoAction = (G, ctx, playData, otherCard) => {
   const actionPlayer = G.players[playData.actionPlayerId];
-  G.lastAction += ` Looks at ${actionPlayer.id}'s card`;
+  G.lastAction += ` Looks at ${G.gameMetadata[actionPlayer.id].name}'s card`;
   G.visibleCard = { id: ctx.currentPlayer, cardId: actionPlayer.card.id };
 }
 
@@ -34,7 +34,7 @@ export const threeAction = (G, ctx, playData, otherCard) => {
 
   if (!otherCard || !actionPlayer.card) return;
   
-  G.lastAction += ` Compares cards with ${actionPlayer.id}.`;
+  G.lastAction += ` Compares cards with ${G.gameMetadata[actionPlayer.id].name}.`;
   if (otherCard.value > actionPlayer.card.value)
     eliminatePlayer(G, ctx, actionPlayer);
   else if (otherCard.value < actionPlayer.card.value)
@@ -43,14 +43,14 @@ export const threeAction = (G, ctx, playData, otherCard) => {
 
 export const fourAction = (G, ctx) => {
   G.players[ctx.currentPlayer].protected = true;
-  G.lastAction += ` ${G.players[ctx.currentPlayer].id} is protected.`;
+  G.lastAction += ` ${G.gameMetadata[G.players[ctx.currentPlayer].id].name} is protected.`;
 }
 
 export const fiveAction = (G, ctx, playData, otherCard) => {
   const player = G.players[ctx.currentPlayer];
   const actionPlayer = G.players[playData.actionPlayerId];
   const card = (actionPlayer.id.toString() === ctx.currentPlayer) ? otherCard : actionPlayer.card;
-  G.lastAction += ` Chooses to discard ${actionPlayer.id}'s card.`;
+  G.lastAction += ` Chooses to discard ${G.gameMetadata[actionPlayer.id].name}'s card.`;
   if (card.value === 8) {
     eliminatePlayer(G, ctx, actionPlayer);
     return;
@@ -72,7 +72,7 @@ export const sixAction = (G, ctx, playData, otherCard) => {
   const player = G.players[ctx.currentPlayer];
   const actionPlayer = G.players[playData.actionPlayerId];
 
-  G.lastAction += ` Swaps cards with ${actionPlayer.id}.`;
+  G.lastAction += ` Swaps cards with ${G.gameMetadata[actionPlayer.id].name}.`;
   const cardCopy = Object.assign({}, otherCard);
   const actionPlayerCard = Object.assign({}, actionPlayer.card);
   actionPlayer.card = cardCopy;

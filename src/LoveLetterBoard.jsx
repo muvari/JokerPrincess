@@ -18,6 +18,11 @@ class LoveLetterBoard extends React.Component {
     this.startNextRound = this.startNextRound.bind(this);
   }
 
+  componentDidMount() {
+    if (!this.props.G.gameMetadata)
+      this.props.moves.namePlayer(this.props.gameMetadata);
+  }
+
   playCard(card, actionPlayer) {
     // First click
     if (!this.state.selectedCard) {
@@ -79,7 +84,8 @@ class LoveLetterBoard extends React.Component {
         continue;
 
       otherPlayers.push(<PlayerComponent
-        player={player}
+        player={player}        
+        playerName={this.props.G.gameMetadata ? this.props.G.gameMetadata[player.id].name : player.id}
         requiredWins={this.props.G.requiredWins}
         currentPlayer={this.props.playerID}
         currentTurn={this.props.ctx.currentPlayer}
@@ -107,7 +113,7 @@ class LoveLetterBoard extends React.Component {
         <div className="gameInfo">
           { this.props.ctx.gameover ? <div><h2>{this.props.ctx.gameover.message}</h2></div>: "" }
             <div>Round: {this.props.G.round}</div>
-            <div>Turn: {this.props.ctx.currentPlayer}</div>
+            <div>Turn: {this.props.G.gameMetadata ? this.props.G.gameMetadata[this.props.ctx.currentPlayer].name : this.props.ctx.currentPlayer}</div>
             <div>Deck: {this.props.G.deck.length} cards left</div>
             <div><h5>{this.props.G.lastAction}</h5></div>
             { this.props.ctx.phase === "reset" ? <div><button type="button" disabled={this.props.playerID !== this.props.ctx.currentPlayer} onClick={this.startNextRound} class="btn btn-primary">Next Round</button></div>: "" }
@@ -137,6 +143,7 @@ class LoveLetterBoard extends React.Component {
         <div className="others">{otherPlayers}</div>
         <PlayerComponent
           player={this.props.G.players[this.props.playerID]}
+          playerName={this.props.G.gameMetadata ? this.props.G.gameMetadata[this.props.playerID].name : this.props.playerID}
           moves={this.props.moves}
           requiredWins={this.props.G.requiredWins}
           currentPlayer={this.props.playerID}

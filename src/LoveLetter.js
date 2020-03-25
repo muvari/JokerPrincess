@@ -19,7 +19,7 @@ const playCard = (G, ctx, playData) => {
 
   // Run card action
   
-  G.lastAction = `${player.id} plays '${Card.cardValuesById[playData.id]}' card.`
+  G.lastAction = `${G.gameMetadata[player.id].name} plays '${Card.cardValuesById[playData.id]}' card.`
   if (!playData.noOptions)
     Card.cardActions[Card.cardValuesById[playData.id]](G, ctx, playData, otherCard);
   else
@@ -37,6 +37,11 @@ const playCard = (G, ctx, playData) => {
 
 const nextRound = (G, ctx) => {
   ctx.events.endPhase();
+}
+
+
+const namePlayer = (G, ctx, metadata) => {
+  G.gameMetadata = metadata;
 }
 
 export const LoveLetter = {
@@ -63,11 +68,12 @@ export const LoveLetter = {
 
   moves: {
     playCard,
+    namePlayer
   },
 
   phases: {
     round: {
-      moves: { playCard },
+      moves: { playCard, namePlayer },
       start: true,
       next: "reset",
       onBegin: (G, ctx) => {
@@ -95,7 +101,7 @@ export const LoveLetter = {
         if (G.eligible.length === 1) {
           G.lastWin = G.players[G.eligible[0]].id;
           G.players[G.eligible[0]].wins += 1;          
-          G.lastAction = `${G.lastWin} Wins Round! (Only remaining player)`;
+          G.lastAction = `${G.gameMetadata[G.lastWin].name} Wins Round! (Only remaining player)`;
           return;
         } else if (G.deck.length === 0) {
           let winners = [];
@@ -115,7 +121,7 @@ export const LoveLetter = {
           if (winners.length === 1) {
             G.lastWin = winners[0].id;
             winners[0].wins += 1;          
-            G.lastAction = `${G.lastWin} Wins Round! (Highest card ${value})`;
+            G.lastAction = `${G.gameMetadata[G.lastWin].name} Wins Round! (Highest card ${value})`;
             return;
           } else {
             // Calculate discarded points
@@ -131,7 +137,7 @@ export const LoveLetter = {
 
             G.lastWin = doubleWinner;
             doubleWinner.wins += 1;          
-            G.lastAction = `${G.lastWin} Wins Round! (Highest card ${value} and highest sum of discarded cards (${highestSum}))`;
+            G.lastAction = `${G.gameMetadata[G.lastWin].name} Wins Round! (Highest card ${value} and highest sum of discarded cards (${highestSum}))`;
             return;
           }
 
