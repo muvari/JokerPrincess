@@ -54,6 +54,9 @@ export const LoveLetter = {
     random: ctx.random,
   }),
 
+  minPlayers: 2,
+  name: 'LoveLetter',
+
   playerView: (G, ctx, playerID) => { 
     return G;
   },

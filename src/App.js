@@ -2,8 +2,9 @@ import React from 'react';
 import './App.css';
 
 import { Client } from 'boardgame.io/react';
-import { Local } from 'boardgame.io/multiplayer';
-// import { SocketIO } from 'boardgame.io/multiplayer';
+// import { Local } from 'boardgame.io/multiplayer';
+import { SocketIO } from 'boardgame.io/multiplayer';
+import { Lobby } from 'boardgame.io/react';
 import { LoveLetter } from './LoveLetter';
 import LoveLetterBoard from './LoveLetterBoard';
 
@@ -12,14 +13,22 @@ const LoveLetterClient = Client({
   board: LoveLetterBoard,
   numPlayers: 2,
   debug: true,
-  // multiplayer: SocketIO({ server: 'http://localhost:8000/' }),
-  multiplayer: Local()
+  multiplayer: SocketIO({ server: 'http://localhost:8000/' }),
  });
 
  const App = () => (
   <div>
-    <LoveLetterClient playerID="0" />
-    <LoveLetterClient playerID="1" />
+     <div>
+          <h1 className="info-text">Love Letter</h1>
+    </div>
+    <Lobby
+      gameServer={`http://${window.location.hostname}:8000`}
+      lobbyServer={`http://${window.location.hostname}:8000`}
+      gameComponents={[{ 
+      game: LoveLetter, 
+      board: LoveLetterBoard,
+    }]}
+  />;
   </div>
 );
 
