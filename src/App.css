@@ -39,7 +39,7 @@ body {
 #instances {
   width: 500px;
 }
-#game-creation > * {
+#game-creation > div > * {
   margin: 0 4px;
 }
 .hidden {
