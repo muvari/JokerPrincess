@@ -18,7 +18,7 @@ import LoveLetterBoard from './LoveLetterBoard';
  const App = () => (
   <div>
      <div>
-          <h1 className="info-text">Love Letter</h1>
+          <h1 className="info-text">Joker Princess</h1>
     </div>
     <Lobby
       gameServer={`https://${window.location.hostname}:443`}
