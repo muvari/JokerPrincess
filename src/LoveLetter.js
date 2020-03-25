@@ -9,16 +9,13 @@ const drawCard = (G, ctx) => {
     player.newCard = G.deck.pop();
 }
 
-const playCard = (G, ctx, playData) => {  
-  // if (typeof window !== 'undefined') return;
+const playCard = (G, ctx, playData) => {
   const player = G.players[ctx.currentPlayer];
   const isOldCard = player.card && player.card.id === playData.id;
   const selectedCard = isOldCard ? player.card : player.newCard;
   const otherCard = !isOldCard ? player.card : player.newCard;
   G.visibleCard = undefined;
 
-  // Run card action
-  
   G.lastAction = `${G.gameMetadata[player.id].name} plays '${Card.cardValuesById[playData.id]}' card.`
   if (!playData.noOptions)
     Card.cardActions[Card.cardValuesById[playData.id]](G, ctx, playData, otherCard);
