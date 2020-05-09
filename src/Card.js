@@ -17,7 +17,7 @@ export const eliminatePlayer= (G, ctx, player) => {
 
 export const oneAction = (G, ctx, playData) => {
   const actionPlayer = G.players[playData.actionPlayerId];
-  G.lastAction += ` Guesses ${G.gameMetadata[actionPlayer.id].name} has '${playData.guessCardValue}' card .`
+  G.lastAction += ` Guesses ${G.gameMetadata[actionPlayer.id].name} has '${playData.guessCardValue}'.`
   if (actionPlayer.card.value === playData.guessCardValue)
     eliminatePlayer(G, ctx, actionPlayer);
 }

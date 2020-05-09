@@ -16,7 +16,8 @@ const playCard = (G, ctx, playData) => {
   const otherCard = !isOldCard ? player.card : player.newCard;
   G.visibleCard = undefined;
 
-  G.lastAction = `${G.gameMetadata[player.id].name} plays '${Card.cardValuesById[playData.id]}' card.`
+  G.history.push(G.lastAction);
+  G.lastAction = `${G.gameMetadata[player.id].name} plays '${Card.cardValuesById[playData.id]}'.`
   if (!playData.noOptions)
     Card.cardActions[Card.cardValuesById[playData.id]](G, ctx, playData, otherCard);
   else
@@ -51,7 +52,8 @@ export const LoveLetter = {
     deckDiscard: [],
     eligible: [],
     lastWin: 0,
-    lastAction: "Begin Round 1",
+    lastAction: "",
+    history: [],
     visibleCard: undefined,
     random: ctx.random,
   }),
@@ -75,6 +77,7 @@ export const LoveLetter = {
       next: "reset",
       onBegin: (G, ctx) => {
         G.round += 1;
+        G.history.push(G.lastAction);
         G.lastAction = `Begin Round ${G.round}`;
         G.eligible = Array.from(Array(ctx.numPlayers).keys());
         G.deck = Deck();
@@ -117,7 +120,8 @@ export const LoveLetter = {
 
           if (winners.length === 1) {
             G.lastWin = winners[0].id;
-            winners[0].wins += 1;          
+            winners[0].wins += 1;
+            G.history.push(G.lastAction);          
             G.lastAction = `${G.gameMetadata[G.lastWin].name} Wins Round! (Highest card ${value})`;
             return;
           } else {
@@ -133,7 +137,8 @@ export const LoveLetter = {
             }
 
             G.lastWin = doubleWinner;
-            doubleWinner.wins += 1;          
+            doubleWinner.wins += 1;
+            G.history.push(G.lastAction);          
             G.lastAction = `${G.gameMetadata[G.lastWin].name} Wins Round! (Highest card ${value} and highest sum of discarded cards (${highestSum}))`;
             return;
           }
