@@ -134,6 +134,7 @@ body {
   justify-content: center;
   flex-direction: row;
   margin-bottom: 20px;
+  flex-wrap: wrap;
 }
 .elim {
   color: #9e0142;
