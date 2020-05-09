@@ -5,8 +5,8 @@ import Button from 'react-bootstrap/Button';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 
 const popover = (
-  <Popover id="popover-basic" style={{maxWidth: "400px"}}>
-    <Popover.Title as="h3">Cards</Popover.Title>
+  <Popover id="popover-positioned-bottom" style={{maxWidth: "400px"}}>
+    <Popover.Title as="h3">Love Letter Cards</Popover.Title>
     <Popover.Content>
     <table className="stats-table">
             <thead>
@@ -55,7 +55,7 @@ const popover = (
 );
 
 export const HelpButton = () => (
-  <OverlayTrigger trigger="hover" placement="right" overlay={popover}>
+  <OverlayTrigger trigger="hover" placement="bottom" overlay={popover}>
     <Button variant="info" className="question"><i class="fas fa-question"></i></Button>
   </OverlayTrigger>
 );
