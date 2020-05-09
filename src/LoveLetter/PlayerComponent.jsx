@@ -57,9 +57,9 @@ class PlayerComponent extends React.Component {
     for (let i = 0; i < this.props.requiredWins; i++) {
       let star;
       if (i < player.wins)
-        star = <i title="Wins" className="fas fa-star" />
+        star = <i title="Wins" key={`star-${player.id}-${i}`} className="fas fa-star" />
       else
-        star = <i title="Wins" className="far fa-star" />
+        star = <i title="Wins" key={`star-${player.id}-${i}`} className="far fa-star" />
       stars.push(star);
     }
 		return (

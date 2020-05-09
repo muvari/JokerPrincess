@@ -94,6 +94,7 @@ class LoveLetterBoard extends React.Component {
         visibleCard={this.props.G.visibleCard}
         phase={this.props.ctx.phase}        
         actionPlayer={this.state.actionPlayer}
+        key={`player-${player.id}`}
       />);
     }
 
@@ -111,7 +112,7 @@ class LoveLetterBoard extends React.Component {
 
     const history = [];
     for (const item of this.props.G.history)
-      history.push(<div className="history-item">{item}</div>);
+      history.push(<div className="history-item" key={`history-${history.length}`}>{item}</div>);
     history.reverse();
     return (
       <div className="board">

@@ -56,6 +56,6 @@ const popover = (
 
 export const HelpButton = () => (
   <OverlayTrigger trigger="hover" placement="bottom" overlay={popover}>
-    <Button variant="info" className="question"><i class="fas fa-question"></i></Button>
+    <Button variant="info" className="question"><i className="fas fa-question"></i></Button>
   </OverlayTrigger>
 );
