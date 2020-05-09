@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 
 const popover = (
-  <Popover id="popover-basic">
+  <Popover id="popover-basic" style={{maxWidth: "400px"}}>
     <Popover.Title as="h3">Cards</Popover.Title>
     <Popover.Content>
     <table className="stats-table">

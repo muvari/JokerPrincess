@@ -92,7 +92,8 @@ class LoveLetterBoard extends React.Component {
         selectedCard={this.state.selectedCard}
         playCard={this.playCard}
         visibleCard={this.props.G.visibleCard}
-        phase={this.props.ctx.phase}
+        phase={this.props.ctx.phase}        
+        actionPlayer={this.state.actionPlayer}
       />);
     }
 
@@ -150,6 +151,7 @@ class LoveLetterBoard extends React.Component {
           playCard={this.playCard}
           selectedCard={this.state.selectedCard}
           currentTurn={this.props.ctx.currentPlayer}
+          actionPlayer={this.state.actionPlayer}
           phase={this.props.ctx.phase}
         />
         <div>Instructions: {this.getInstructions()}</div>
