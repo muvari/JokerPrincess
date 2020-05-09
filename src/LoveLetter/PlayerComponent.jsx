@@ -1,6 +1,6 @@
 import React from 'react';
 import CardComponent from './CardComponent';
-import '../node_modules/@fortawesome/fontawesome-free/css/all.min.css';
+import '../../node_modules/@fortawesome/fontawesome-free/css/all.min.css';
 
 class PlayerComponent extends React.Component {
 

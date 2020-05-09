@@ -3,8 +3,8 @@ import './App.css';
 
 // import { Client } from 'boardgame.io/react';
 import { Lobby } from 'boardgame.io/react';
-import { LoveLetter } from './LoveLetter';
-import LoveLetterBoard from './LoveLetterBoard';
+import { LoveLetter } from './LoveLetter/LoveLetter';
+import LoveLetterBoard from './LoveLetter/LoveLetterBoard';
 import { HelpButton } from './HelpButton';
 
 // const LoveLetterClient = Client({ 
