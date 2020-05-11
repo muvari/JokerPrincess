@@ -1,42 +1,47 @@
 import React from 'react';
 import './App.css';
 
-// import { Client } from 'boardgame.io/react';
+import { Client } from 'boardgame.io/react';
+import { Local } from 'boardgame.io/multiplayer';
 import { Lobby } from 'boardgame.io/react';
 import { LoveLetter } from './LoveLetter/LoveLetter';
 import LoveLetterBoard from './LoveLetter/LoveLetterBoard';
 import { HelpButton } from './HelpButton';
+import { CustomBot } from './LoveLetter/Bot';
 
-// const LoveLetterClient = Client({ 
-//   game: LoveLetter, 
-//   board: LoveLetterBoard, 
-//   numPlayers: 2,
-//   debug: true,
-//   multiplayer: false,
-//  });
+const LoveLetterLocalClient = Client({ 
+  game: LoveLetter, 
+  board: LoveLetterBoard, 
+  numPlayers: 4,
+  debug: false,
+  multiplayer: Local({ bots: {
+    '1': CustomBot, 
+    '2': CustomBot, 
+    '3': CustomBot
+  } }),
+ });
 
-// const App = () => (
-//   <div>
-//      <div style={{display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
-//           <h1 className="info-text">Joker Princess</h1><HelpButton />
-//     </div>
-//     <LoveLetterClient playerID="0" />
-//   </div>
-// );
-
- const App = () => (
+ 
+const App = () => (
   <div>
-     <div style={{display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
+     <div className="title">
           <h1 className="info-text">Joker Princess</h1><HelpButton />
     </div>
-    <Lobby
-      gameServer={`https://${window.location.hostname}:443`}
-      lobbyServer={`https://${window.location.hostname}:443`}
-      gameComponents={[{ 
-      game: LoveLetter, 
-      board: LoveLetterBoard,
-    }]}
-  />
+    { window.location.search === "?loveletter" ? 
+      <LoveLetterLocalClient playerID="0" /> :
+      <React.Fragment>
+        <div style={{margin: "16px"}}><strong>Multiplayer Lobby</strong></div>
+        <Lobby
+        gameServer={`https://${window.location.hostname}:443`}
+        lobbyServer={`https://${window.location.hostname}:443`}
+        gameComponents={[{ 
+        game: LoveLetter, 
+        board: LoveLetterBoard,
+          }]}
+        />        
+        <div className="single-player"><a href="?loveletter" className="btn btn-secondary">Play Love Letter Singleplayer</a></div>
+    </React.Fragment>
+    }
   </div>
 );
 

@@ -1,4 +1,5 @@
 import { removeKnownCard } from './Card';
+import { MCTSBot } from 'boardgame.io/ai';
 
 const cardSelection = (G, ctx) => {  
   const player = G.players[ctx.currentPlayer]; 
@@ -118,9 +119,15 @@ const guessNumber = (G, ctx, otherPlayer) => {
   return cards[rdm - 1];
 }
 
+export class CustomBot extends MCTSBot {
+  constructor(ai) {
+    ai.iterations = 400000;
+    ai.playoutDepth = 2000;
+    super(ai);
+  }
+}
+
 export const LoveLetterBot = {
-  iterations: 10000,
-  playoutDepth: 200,
   enumerate: (G, ctx) => {  
     if (ctx.phase === "reset")
       return  [{ move: 'nextRound', args: []}];
