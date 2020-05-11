@@ -12,6 +12,8 @@ export const eliminatePlayer= (G, ctx, player) => {
   if (player.newCard && !player.discarded.some((d) => d.id === player.newCard.id))
     player.discarded.push(player.newCard);
   player.eliminated = true;
+  for (const p of player.cardIsKnownBy)
+      removeKnownCard(G.players[p], player, player.card);
   G.lastAction += ` - Player ${G.gameMetadata[player.id].name} Eliminated!`;
 }
 
@@ -26,6 +28,8 @@ export const twoAction = (G, ctx, playData, otherCard) => {
   const actionPlayer = G.players[playData.actionPlayerId];
   G.lastAction += ` Looks at ${G.gameMetadata[actionPlayer.id].name}'s card`;
   G.visibleCard = { id: ctx.currentPlayer, cardId: actionPlayer.card.id };
+
+  addKnownCard(G.players[ctx.currentPlayer], actionPlayer);
 }
 
 export const threeAction = (G, ctx, playData, otherCard) => {
@@ -80,6 +84,9 @@ export const sixAction = (G, ctx, playData, otherCard) => {
     player.card = actionPlayerCard;
   else
     player.newCard = actionPlayerCard;
+
+  addKnownCard(player, actionPlayer);
+  addKnownCard(actionPlayer, player);
 }
 
 export const sevenAction = (G, ctx, playData, otherCard) => {
@@ -90,5 +97,24 @@ export const eightAction = (G, ctx) => {
   eliminatePlayer(G, ctx, G.players[ctx.currentPlayer]);
 }
 
+export const addKnownCard = (player, otherPlayer) => {
+  player.knownCards.push(otherPlayer);
+  otherPlayer.cardIsKnownBy.push(player.id);
+}
+
+export const removeKnownCard = (player, otherPlayer) => {
+  let config = Object.getOwnPropertyDescriptor(otherPlayer, 'cardIsKnownBy');
+  if (config.configurable) {
+    const i = otherPlayer.cardIsKnownBy.findIndex(x => x === player.id);
+    if (i > -1) otherPlayer.cardIsKnownBy.splice(i, 1);
+  }
+
+  config = Object.getOwnPropertyDescriptor(player, 'knownCards');
+  if (config.configurable) {
+    const j = player.knownCards.findIndex(x => x === otherPlayer.id);
+    if (j > -1) player.knownCards.splice(j, 1);
+  }
+}
+
 export const cardValuesById = [1, 1, 1, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 7, 8];
-export const cardActions = [() => {}, oneAction, twoAction, threeAction, fourAction, fiveAction, sixAction, sevenAction, eightAction]
+export const cardActions = [() => {}, oneAction, twoAction, threeAction, fourAction, fiveAction, sixAction, sevenAction, eightAction];

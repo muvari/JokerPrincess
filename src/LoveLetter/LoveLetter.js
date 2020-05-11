@@ -1,5 +1,6 @@
 import { Player } from './Player';
 import * as Card from './Card';
+import { LoveLetterBot } from './Bot';
 
 const Deck = () => { return Array(16).fill().map((_val, i) => (new Card.Card(i))) };
 
@@ -68,7 +69,9 @@ export const LoveLetter = {
   moves: {
     playCard,
     namePlayer
-  },
+  }, 
+
+  ai: LoveLetterBot,
 
   phases: {
     round: {
@@ -95,6 +98,8 @@ export const LoveLetter = {
           player.discarded = [];
           player.eliminated = false;
           player.protected = false;
+          player.cardIsKnownBy = [];
+          player.knownCards = [];
         }
       },
       onEnd: (G, ctx) => {
@@ -155,7 +160,7 @@ export const LoveLetter = {
 
   turn: {
     order: {
-      first: (G, ctx) => G.lastWin,
+      first: (G, ctx) => { return (ctx.phase === "reset" && G.gameMetadata.length === 5) ? '0' : G.lastWin; },
       next: (G, ctx) => {
         if (G.eligible.length < 1) return -1;
         let n = (ctx.playOrderPos + 1) % ctx.numPlayers;

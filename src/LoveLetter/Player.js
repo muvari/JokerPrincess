@@ -6,6 +6,8 @@ export const Player = (id) => {
     newCard: undefined,
     discarded: [],
     eliminated: false,
-    protected: false
+    protected: false,
+    knownCards: [],
+    cardIsKnownBy: []
   };
 }
