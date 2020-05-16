@@ -13,9 +13,7 @@
   display: flex;
 }
 .lower {
-  width: 100px;
-  border-right: 1px solid white;
-  color: white;
+  width: 100px !important;
 }
 .bracket {
   width: 200px;
@@ -68,6 +66,22 @@
   border-radius: 4px;
   font-weight: 700;
   user-select: none;
+}
+.player-wager {
+  padding: 4px 8px;
+  margin: auto;
+  margin-bottom: 2px;
+  font-size: 16px;
+  border: 3px solid white;
+  background-color: white;
+  border-radius: 50%;
+  font-weight: 700;
+  user-select: none;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .zero {
   background-color: #D5202A;

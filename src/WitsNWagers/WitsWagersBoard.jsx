@@ -20,6 +20,10 @@ class WitsWagersBoard extends React.Component {
     this.setState({selectedBracket: bracketId, selectedBracketValue: value});
   }
 
+  startNextRound = () => {
+    this.props.moves.nextRound();
+  }
+
   render() {
     const otherPlayers = [];
     for (const player of this.props.G.players) {
@@ -41,9 +45,11 @@ class WitsWagersBoard extends React.Component {
 
     return (
       <div className="board">
-        <h3>How many are there?</h3>
+        {this.props.G.question ? <h3>Question {this.props.G.round}/7: {this.props.G.question}</h3> : "" }
+        {this.props.G.answer ? <h2>{this.props.G.answer}</h2> : "" }
+        {this.props.G.answer ? <button type="button" onClick={this.startNextRound.bind(this)} disabled={this.props.playerID !== this.props.ctx.currentPlayer} className="btn btn-primary" style={{margin: "8px"}}>Next Round</button> : "" }
         <div className="gameBoard">
-          <div className="lower">6 in one</div>
+          <Bracket o={6} odds="6 to 1" id="-4" guesses={[]} G={this.props.G} ctx={this.props.ctx} moves={this.props.moves} selectBracket={this.selectBracket} />
           <Bracket o={5} odds="5 to 1" id="-3" guesses={this.props.G.layout["-3"] || []} G={this.props.G} ctx={this.props.ctx} moves={this.props.moves} selectBracket={this.selectBracket}/>
           <Bracket o={4} odds="4 to 1" id="-2" guesses={this.props.G.layout["-2"] || []} G={this.props.G} ctx={this.props.ctx} moves={this.props.moves} selectBracket={this.selectBracket}/>
           <Bracket o={3} odds="3 to 1" id="-1" guesses={this.props.G.layout["-1"] || []} G={this.props.G} ctx={this.props.ctx} moves={this.props.moves} selectBracket={this.selectBracket}/>

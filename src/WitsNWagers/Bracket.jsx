@@ -14,6 +14,11 @@ class Bracket extends React.Component {
   onClick() {
     if (this.props.ctx.phase !== "wager")
       return;
+
+    if (this.props.o === 6) {
+      this.props.selectBracket(this.props.id, "Lower");
+      return;
+    }
     if (this.props.guesses.length < 1)
       return;
 
@@ -25,16 +30,30 @@ class Bracket extends React.Component {
     for (const g of this.props.guesses) {
       guesses.push(<div className={`player-guess ${classes[this.props.G.players[g].id]}`}>{this.props.G.players[g].guessValue}</div>);      
     }
+
+    const wagers = [];
+    for (const p of this.props.G.players) {
+      if (p.wager1 && p.wager1.bracket === this.props.id)
+        wagers.push(<div className={`player-wager ${classes[p.id]}`}>${p.wager1.amount}</div>);
+      if (p.wager2 && p.wager2.bracket === this.props.id)
+        wagers.push(<div className={`player-wager ${classes[p.id]}`}>${p.wager2.amount}</div>);
+    }
     
     return (
-      <div className="bracket" onClick={this.onClick.bind(this)}>
+      <div className={`bracket ${this.props.o === 6 ? "lower" : ""}`} onClick={this.onClick.bind(this)}>
         <div className="guesses">
-          {this.props.ctx.phase === "wager" ? 
+          {this.props.ctx.phase === "wager" || this.props.ctx.phase === "result" ? 
           guesses
           : ""
           }
         </div>
-        <div className="wagers"></div>
+        <div className="wagers">
+        {this.props.ctx.phase === "wager" || this.props.ctx.phase === "result" ? 
+          wagers
+          : ""
+          }
+        </div>
+        {this.props.o === 6 ? <span className="odds">Lower</span> : "" }
         <div className="odds">{this.props.odds}</div>
       </div>
     );

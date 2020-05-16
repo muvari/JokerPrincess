@@ -44,9 +44,9 @@ class PlayerComponent extends React.Component {
 
   onWagerSubmit() {
     if (this.props.player.wager1)
-      this.props.wager2({userId: this.props.userId, amount: this.state.wager2Amount, bracket: this.props.selectedBracket});
+      this.props.wager2({userId: this.props.userId, amount: this.state.wager2Amount, bracket: this.props.selectedBracket, value: this.props.selectedBracketValue});
     else 
-      this.props.wager1({userId: this.props.userId, amount: this.state.wager1Amount, bracket: this.props.selectedBracket});
+      this.props.wager1({userId: this.props.userId, amount: this.state.wager1Amount, bracket: this.props.selectedBracket, value: this.props.selectedBracketValue});
     this.props.selectBracket(undefined);
   }
 
@@ -70,6 +70,8 @@ class PlayerComponent extends React.Component {
       </React.Fragment>)
       : 
         this.props.player.wager1 && this.props.player.wager2 ? "Submitted" : "Wagering...";
+    } else if (this.props.phase === "wager" && !this.props.selectedBracket) {
+      playerView = (this.props.player.id.toString() === this.props.userId) ? "" : this.props.player.wager1 && this.props.player.wager2 ? "Submitted" : "Wagering...";
     } else if (this.props.phase === "guess") {
       playerView = (this.props.player.id.toString() === this.props.userId) ? 
         (<React.Fragment>
@@ -80,6 +82,9 @@ class PlayerComponent extends React.Component {
         </React.Fragment>)
         : 
         this.props.player.guessValue ? "Submitted" : "Guessing...";
+    } else if (this.props.phase === "result") {
+      const pR = this.props.G.results[this.props.player.id];
+      playerView = (<div><div>{`Guess: +$${pR.guess}`}</div><div>{`Wager 1: $${pR.wager1}`}</div><div>{`Wager 2: $${pR.wager2}`}</div><div>{`Total: $${pR.guess + pR.wager1 + pR.wager2}`}</div></div>);
     }
     
     return (
