@@ -1,0 +1,96 @@
+.board {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin: 16px;
+}
+.gameBoard {
+  width: 900px;
+  min-height: 240px;
+  background-color: #3aac40;
+  border: 1px solid gainsboro;
+  margin-bottom: 12px;
+  display: flex;
+}
+.lower {
+  width: 100px;
+  border-right: 1px solid white;
+  color: white;
+}
+.bracket {
+  width: 200px;
+  border: 2px solid white;
+  border-radius: 16px;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  background-color: #3aac40;
+  justify-content: flex-end;
+  cursor: pointer;
+}
+.bracket:hover {  
+  background-color: #66b46a;
+}
+.guesses {
+  min-height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;  
+  flex-direction: column;
+}
+.wagers {
+  min-height: 100px;
+}
+.odds {
+  height: 40px;
+  user-select: none;
+  font-weight: 700;
+}
+.player {
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+  background-color: white;
+  color: white;
+  padding: 4px;
+  border-radius: 4px;
+  min-width: 200px;
+  margin: 4px;
+  border: 3px solid #111;
+  min-height:40px;
+}
+.player-guess {
+  padding: 4px 8px;
+  margin: 4px;
+  font-size: 20px;
+  border: 3px solid black;
+  background-color: white;
+  border-radius: 4px;
+  font-weight: 700;
+  user-select: none;
+}
+.zero {
+  background-color: #D5202A;
+}
+.one {
+  background-color: #0053AE;
+}
+.two {
+  background-color: #5B9F49;
+}
+.three {
+  background-color: #AC54A0;
+}
+.four {
+  background-color: #FF8833;
+}
+.five {
+  background-color: #FFB92F;
+}
+.six {
+  background-color: #15AADC;
+}
+.score {
+  font-weight: 700;
+  font-size: 18px;
+}

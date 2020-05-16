@@ -1,6 +1,7 @@
 import React from 'react';
 import PlayerComponent from './PlayerComponent';
 import CardComponent from './CardComponent';
+import "./LoveLetter.css";
 
 class LoveLetterBoard extends React.Component {
 
