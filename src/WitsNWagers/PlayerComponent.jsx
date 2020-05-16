@@ -57,6 +57,7 @@ class PlayerComponent extends React.Component {
       const maxValue = this.props.player.wager1 ? this.props.player.score - this.props.player.wager1.amount + 2: this.props.player.score + 1;
       playerView = (this.props.player.id.toString() === this.props.userId) ? 
       (<React.Fragment>
+        <div>{`Wagering on '${this.props.selectedBracketValue}'`}</div>
         <Slider min={1} max={maxValue} step={1} defaultValue={1}
           onChange={this.onSliderChange.bind(this)}/>
         <Form.Control disabled={this.props.player.wager1 && this.props.player.wager2} 

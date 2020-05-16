@@ -9,14 +9,15 @@ class WitsWagersBoard extends React.Component {
     super(props);
 
     this.state = {
-      selectedBracket: undefined
+      selectedBracket: undefined,
+      selectedBracketValue: undefined,
     }
 
     this.selectBracket.bind(this);
   }
 
-  selectBracket = (bracketId) => {
-    this.setState({selectedBracket: bracketId});
+  selectBracket = (bracketId, value) => {
+    this.setState({selectedBracket: bracketId, selectedBracketValue: value});
   }
 
   render() {
@@ -32,7 +33,9 @@ class WitsWagersBoard extends React.Component {
         wager2={this.props.moves.wager2}
         phase={this.props.ctx.phase}
         selectedBracket={this.state.selectedBracket}
+        selectedBracketValue={this.state.selectedBracketValue}
         selectBracket={this.selectBracket}
+        G={this.props.G}
       />);
     }
 

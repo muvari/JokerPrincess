@@ -17,13 +17,13 @@ class Bracket extends React.Component {
     if (this.props.guesses.length < 1)
       return;
 
-    this.props.selectBracket(this.props.id);
+    this.props.selectBracket(this.props.id, this.props.G.players[this.props.guesses[0]].guessValue);
   }
 
   render() {
     const guesses = [];
     for (const g of this.props.guesses) {
-      guesses.push(<div className={`player-guess ${classes[this.props.G.players[g].id]}`}>{this.props.G.players[g].guessValue}</div>)
+      guesses.push(<div className={`player-guess ${classes[this.props.G.players[g].id]}`}>{this.props.G.players[g].guessValue}</div>);      
     }
     
     return (
