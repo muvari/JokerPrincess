@@ -5,8 +5,9 @@ const guessNumber = (G, ctx, playData) => {
   G.players[playData.userId].guessValue = playData.guessValue;
 };
 
-const changeQuestion = () => {
-
+const changeQuestion = (G, ctx) => {
+  G.previousQuestions.push(G.questionIndex);
+  newQuestion(G, ctx);
 }
 
 const wager1 = (G, ctx, playData) => {

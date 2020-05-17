@@ -24,6 +24,10 @@ class WitsWagersBoard extends React.Component {
     this.props.moves.nextRound();
   }
 
+  changeQuestion = () => {
+    this.props.moves.changeQuestion();
+  }
+
   componentDidMount() {
     if (!this.props.G.gameMetadata)
       this.props.moves.namePlayer(this.props.gameMetadata || this.getOfflineMetadata());
@@ -64,6 +68,7 @@ class WitsWagersBoard extends React.Component {
       <div className="board">
         { this.props.ctx.gameover ? <h2>{this.props.ctx.gameover.message}</h2> : "" }
         {this.props.G.question ? <div style={{width: "700px"}}><h3>Q {this.props.G.round}/7: {this.props.G.question}</h3></div> : "" }
+        {this.props.ctx.phase === "guess" ? <button type="button" onClick={this.changeQuestion.bind(this)} class="btn btn-link">Change question</button> : "" }
         {this.props.G.answer ? <h2>{this.props.G.answer}</h2> : "" }
         {this.props.G.answer && !this.props.ctx.gameover ? <button type="button" onClick={this.startNextRound.bind(this)} className="btn btn-primary" style={{margin: "8px"}}>Next Round</button> : "" }
         <div className="gameBoard">
