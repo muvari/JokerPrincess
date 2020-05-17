@@ -162,8 +162,21 @@ export const WitsWagers = {
     },
     result: {
       moves: { nextRound },
+      onBegin: (G, ctx) => {
+        ctx.events.setActivePlayers({
+          currentPlayer: { stage: 'reset' },
+          others: { stage: 'reset' },
+        });
+      },
       onEnd: (G, ctx) => {
         G.players[0].guessValue = undefined;
+      },
+      turn: {
+        stages: {
+          reset: {
+            moves: { nextRound },
+          },
+        }
       },
       next: 'guess',   
     },

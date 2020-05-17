@@ -47,7 +47,7 @@ class WitsWagersBoard extends React.Component {
       <div className="board">
         {this.props.G.question ? <h3>Question {this.props.G.round}/7: {this.props.G.question}</h3> : "" }
         {this.props.G.answer ? <h2>{this.props.G.answer}</h2> : "" }
-        {this.props.G.answer ? <button type="button" onClick={this.startNextRound.bind(this)} disabled={this.props.playerID !== this.props.ctx.currentPlayer} className="btn btn-primary" style={{margin: "8px"}}>Next Round</button> : "" }
+        {this.props.G.answer ? <button type="button" onClick={this.startNextRound.bind(this)} className="btn btn-primary" style={{margin: "8px"}}>Next Round</button> : "" }
         <div className="gameBoard">
           <Bracket o={6} odds="6 to 1" id="-4" guesses={[]} G={this.props.G} ctx={this.props.ctx} moves={this.props.moves} selectBracket={this.selectBracket} />
           <Bracket o={5} odds="5 to 1" id="-3" guesses={this.props.G.layout["-3"] || []} G={this.props.G} ctx={this.props.ctx} moves={this.props.moves} selectBracket={this.selectBracket}/>
