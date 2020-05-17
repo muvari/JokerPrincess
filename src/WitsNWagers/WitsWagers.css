@@ -1,4 +1,4 @@
-.board {
+.board-w {
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -51,7 +51,7 @@
   user-select: none;
   font-weight: 700;
 }
-.player {
+.player-w {
   display: flex;
   flex-direction: column;
   width: 200px;

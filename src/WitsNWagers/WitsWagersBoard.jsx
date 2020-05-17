@@ -81,7 +81,7 @@ class WitsWagersBoard extends React.Component {
     }
 
     return (
-      <div className="board">
+      <div className="board-w">
         { this.props.ctx.gameover ? <h2>{this.props.ctx.gameover.message}</h2> : "" }
         {this.props.G.question ? <div style={{width: "700px"}}><h3>Q {this.props.G.round}/7: {this.props.G.question}</h3></div> : "" }
         {this.props.ctx.phase === "guess" ? <button type="button" onClick={this.changeQuestion.bind(this)} class="btn btn-link">Change question</button> : "" }

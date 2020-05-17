@@ -95,7 +95,7 @@ class PlayerComponent extends React.Component {
         score -= (this.props.player.wager2.amount - 1);
     }
     return (
-      <div className={`player ${classes[this.props.player.id]}`}>
+      <div className={`player-w ${classes[this.props.player.id]}`}>
         <div className="playerInfo">
           <div>Name: {this.props.playerName}</div>
             <div><span className="score">${score}</span></div>
