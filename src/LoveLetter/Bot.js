@@ -121,7 +121,7 @@ const guessNumber = (G, ctx, otherPlayer) => {
 
 export class CustomBot extends MCTSBot {
   constructor(ai) {
-    ai.iterations = 400000;
+    ai.iterations = 300000;
     ai.playoutDepth = 2000;
     super(ai);
   }
