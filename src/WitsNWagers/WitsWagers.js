@@ -20,6 +20,10 @@ const nextRound = (G, ctx) => {
   ctx.events.endPhase();
 }
 
+const namePlayer = (G, ctx, metadata) => {
+  G.gameMetadata = metadata;
+}
+
 const odds = { "-4": 6, "-3": 5, "-2": 4, "-1": 3, "0": 2, "1": 3, "2": 4, "3": 5};
 
 
@@ -47,12 +51,13 @@ export const WitsWagers = {
     changeQuestion,
     wager1,
     wager2,
-    nextRound
+    nextRound,
+    namePlayer
   }, 
 
   phases: {
     guess: {
-      moves: { guessNumber, changeQuestion },
+      moves: { guessNumber, changeQuestion, namePlayer },
       start: true,
       next: "wager",
       onBegin: (G, ctx) => {
@@ -75,7 +80,7 @@ export const WitsWagers = {
       turn: {
         stages: {
           guessStage: {
-            moves: { guessNumber, changeQuestion },
+            moves: { guessNumber, changeQuestion, namePlayer },
             next: "wait",
           },
           wait: {
@@ -183,9 +188,9 @@ export const WitsWagers = {
   },
 
   endIf: (G, ctx) => {
-    if (G.round > 2) {
+    if (G.round > 7) {
       const winner = G.players.reduce((max, player) => max.score > player.score ? max : player);
-      return { winner: winner.id, message: `${winner.id} WINS $${winner.score}!!!`};
+      return { winner: winner.id, message: `${G.gameMetadata[winner.id].name} WINS $${winner.score}!!!`};
     }
   },
 };

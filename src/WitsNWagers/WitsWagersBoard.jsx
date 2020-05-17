@@ -24,6 +24,23 @@ class WitsWagersBoard extends React.Component {
     this.props.moves.nextRound();
   }
 
+  componentDidMount() {
+    if (!this.props.G.gameMetadata)
+      this.props.moves.namePlayer(this.props.gameMetadata || this.getOfflineMetadata());
+  }
+
+  getOfflineMetadata() {
+    return [
+    {id: 0, name: "You"},
+    {id: 1, name: "Bender"},
+    {id: 2, name: "R2D2"},
+    {id: 3, name: "Terminator"},
+    {id: 4, name: "T3"},
+    {id: 5, name: "T4"},
+    {id: 6, name: "T5"},
+    "Local"];
+  }
+
   render() {
     const otherPlayers = [];
     for (const player of this.props.G.players) {
