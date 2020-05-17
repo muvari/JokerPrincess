@@ -5,20 +5,23 @@
   margin: 16px;
 }
 .gameBoard {
-  width: 900px;
+  max-width: 900px;
   min-height: 240px;
   background-color: #3aac40;
   border: 1px solid gainsboro;
   margin-bottom: 12px;
   display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
 }
 .lower {
-  width: 100px !important;
+  width: 60px !important;
 }
 .bracket {
-  width: 200px;
+  width: 110px;
   border: 2px solid white;
-  border-radius: 16px;
+  border-radius: 24px;
+  margin-left: 4px;
   color: white;
   display: flex;
   flex-direction: column;
@@ -38,6 +41,10 @@
 }
 .wagers {
   min-height: 100px;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 .odds {
   height: 40px;
@@ -67,6 +74,7 @@
   font-weight: 700;
   user-select: none;
   min-width: 50px;
+  z-index: 2;
 }
 .player-wager {
   padding: 4px 8px;
