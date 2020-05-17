@@ -24,10 +24,10 @@
   flex-direction: column;
   background-color: #3aac40;
   justify-content: flex-end;
-  cursor: pointer;
 }
-.bracket:hover {  
+.bracket-hover:hover {  
   background-color: #66b46a;
+  cursor: pointer;
 }
 .guesses {
   min-height: 100px;
@@ -84,26 +84,26 @@
   justify-content: center;
   align-items: center;
 }
-.zero {
+.zero-w {
   background-color: #D5202A;
 }
-.one {
+.one-w {
   background-color: #0053AE;
 }
-.two {
+.two-w {
   background-color: #5B9F49;
 }
-.three {
+.three-w {
   background-color: #AC54A0;
 }
-.four {
-  background-color: #FF8833;
-}
-.five {
+.four-w {
   background-color: #FFB92F;
 }
-.six {
+.five-w {
   background-color: #15AADC;
+}
+.six-w {
+  background-color: #FF8833;
 }
 .score {
   font-weight: 700;

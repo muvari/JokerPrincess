@@ -1,6 +1,6 @@
 import React from 'react';
 
-const classes = ["zero","one","two","three","four","five","six","seven","eight"];
+const classes = ["zero-w","one-w","two-w","three-w","four-w","five-w","six-w","seven-w","eight-w"];
 
 class Bracket extends React.Component {
 
@@ -9,6 +9,8 @@ class Bracket extends React.Component {
 
     this.state = {
     }
+
+    this.shouldHover = this.shouldHover.bind(this);
   }
 
   onClick() {
@@ -23,6 +25,17 @@ class Bracket extends React.Component {
       return;
 
     this.props.selectBracket(this.props.id, this.props.G.players[this.props.guesses[0]].guessValue);
+  }
+
+  shouldHover() {
+    if (this.props.ctx.phase !== "wager")
+      return "";
+    if (this.props.o === 6)
+      return "bracket-hover";
+
+    if (this.props.guesses.length < 1)
+      return "";
+    return "bracket-hover";
   }
 
   render() {
@@ -40,7 +53,7 @@ class Bracket extends React.Component {
     }
     
     return (
-      <div className={`bracket ${this.props.o === 6 ? "lower" : ""}`} onClick={this.onClick.bind(this)}>
+      <div className={`bracket ${this.shouldHover()} ${this.props.o === 6 ? "lower" : ""}`} onClick={this.onClick.bind(this)}>
         <div className="guesses">
           {this.props.ctx.phase === "wager" || this.props.ctx.phase === "result" ? 
           guesses

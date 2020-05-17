@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 
-const classes = ["zero","one","two","three","four","five","six","seven","eight"];
+const classes = ["zero-w","one-w","two-w","three-w","four-w","five-w","six-w","seven-w","eight-w"];
 
 class PlayerComponent extends React.Component {
 
@@ -58,7 +58,7 @@ class PlayerComponent extends React.Component {
       playerView = (this.props.player.id.toString() === this.props.userId) ? 
       (<React.Fragment>
         <div>{`Wagering on '${this.props.selectedBracketValue}'`}</div>
-        <Slider min={1} max={maxValue} step={1} defaultValue={1}
+        <Slider min={1} max={maxValue} step={1} defaultValue={1} style={{marginBottom: "4px"}}
           onChange={this.onSliderChange.bind(this)}/>
         <Form.Control disabled={this.props.player.wager1 && this.props.player.wager2} 
           onInput={this.onWagerInput.bind(this)}  
@@ -87,11 +87,18 @@ class PlayerComponent extends React.Component {
       playerView = (<div><div>{`Guess: +$${pR.guess}`}</div><div>{`Wager 1: $${pR.wager1}`}</div><div>{`Wager 2: $${pR.wager2}`}</div><div>{`Total: $${pR.guess + pR.wager1 + pR.wager2}`}</div></div>);
     }
     
+    let score = this.props.player.score;
+    if (this.props.phase === "wager") {
+      if (this.props.player.wager1)
+        score -= (this.props.player.wager1.amount - 1);
+      if (this.props.player.wager2)
+        score -= (this.props.player.wager2.amount - 1);
+    }
     return (
       <div className={`player ${classes[this.props.player.id]}`}>
         <div className="playerInfo">
           <div>Name: {this.props.playerName}</div>
-            <div><span className="score">${this.props.player.score}</span></div>
+            <div><span className="score">${score}</span></div>
           </div>
           <div style={{margin: "8px"}}>
             {playerView}

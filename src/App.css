@@ -15,7 +15,6 @@ body {
 .single-player {
   margin: 8px;
   padding-top: 8px;
-  border-top: 1px solid #7f8c8d;
 }
 .title {
   display: flex;
