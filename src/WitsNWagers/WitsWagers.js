@@ -25,7 +25,7 @@ const odds = { "-4": 6, "-3": 5, "-2": 4, "-1": 3, "0": 2, "1": 3, "2": 4, "3": 
 
 export const WitsWagers = {
   setup: (ctx) => ({
-    round: 0,
+    round: 1,
     random: ctx.random,
     question: "How many are there?",
     answer: undefined,
@@ -62,7 +62,6 @@ export const WitsWagers = {
           player.wager2 = undefined;
         }     
         G.results = {};
-        G.round += 1;
         G.answer = undefined;
         G.end = false;
         ctx.events.setActivePlayers({
@@ -166,7 +165,8 @@ export const WitsWagers = {
         ctx.events.setActivePlayers({
           currentPlayer: { stage: 'reset' },
           others: { stage: 'reset' },
-        });
+        });        
+        G.round += 1;
       },
       onEnd: (G, ctx) => {
         G.players[0].guessValue = undefined;
@@ -183,6 +183,9 @@ export const WitsWagers = {
   },
 
   endIf: (G, ctx) => {
-    if (G.round > 7) return;
+    if (G.round > 2) {
+      const winner = G.players.reduce((max, player) => max.score > player.score ? max : player);
+      return { winner: winner.id, message: `${winner.id} WINS $${winner.score}!!!`};
+    }
   },
 };
