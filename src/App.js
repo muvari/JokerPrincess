@@ -6,6 +6,8 @@ import { Local } from 'boardgame.io/multiplayer';
 import { Lobby } from 'boardgame.io/react';
 import { LoveLetter } from './LoveLetter/LoveLetter';
 import LoveLetterBoard from './LoveLetter/LoveLetterBoard';
+import { WitsWagers } from './WitsNWagers/WitsWagers';
+import WitsWagersBoard from './WitsNWagers/WitsWagersBoard';
 import { HelpButton } from './HelpButton';
 import { CustomBot } from './LoveLetter/Bot';
 
@@ -21,6 +23,13 @@ const LoveLetterLocalClient = Client({
   } }),
  });
 
+ const WitsWagersLocalClient = Client({ 
+  game: WitsWagers, 
+  board: WitsWagersBoard, 
+  numPlayers: 2,
+  debug: true,
+  multiplayer: Local(),
+ });
  
 const App = () => (
   <div>
@@ -34,9 +43,14 @@ const App = () => (
         <Lobby
         gameServer={`https://${window.location.hostname}:443`}
         lobbyServer={`https://${window.location.hostname}:443`}
-        gameComponents={[{ 
-        game: LoveLetter, 
-        board: LoveLetterBoard,
+        gameComponents={[
+          { 
+          game: LoveLetter, 
+          board: LoveLetterBoard,
+          },
+          { 
+          game: WitsWagers, 
+          board: WitsWagersBoard,
           }]}
         />        
         <div className="single-player"><a href="?loveletter" className="btn btn-secondary">Play Love Letter Singleplayer</a></div>
