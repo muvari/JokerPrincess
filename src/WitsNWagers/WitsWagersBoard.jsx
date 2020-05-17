@@ -45,6 +45,22 @@ class WitsWagersBoard extends React.Component {
     "Local"];
   }
 
+  getInstructions() {
+    if (this.props.ctx.phase === "guess") {
+      return "Guess an answer without going over.";
+    } else if (this.props.ctx.phase === "wager") {
+      const wager = this.props.G.players[Number(this.props.playerID)].wager1 ? "2" : "1";
+      if (this.state.selectedBracket) {
+        return `Choose an amount to wager. (${wager}/2)`;
+      } else {
+        return `On the board, choose what answer you think is closest without going over, or 'Lower'. (${wager}/2)`;
+      }
+    } else if (this.props.ctx.phase === "result") {
+      return "Start next round.";
+    }
+    return "";
+  }
+
   render() {
     const otherPlayers = [];
     for (const player of this.props.G.players) {
@@ -82,6 +98,7 @@ class WitsWagersBoard extends React.Component {
           <Bracket o={5} odds="5 to 1" id="3" guesses={this.props.G.layout["3"] || []} G={this.props.G} ctx={this.props.ctx} moves={this.props.moves} selectBracket={this.selectBracket}/>
         </div>
         <div className="others">{otherPlayers}</div>
+        <div>Instructions: {this.getInstructions()}</div>
       </div>
     );
   }
