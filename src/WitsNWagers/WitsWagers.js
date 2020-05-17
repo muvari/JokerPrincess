@@ -1,4 +1,5 @@
 import { Player } from './Player';
+import { Questions } from './questions';
 
 const guessNumber = (G, ctx, playData) => {
   G.players[playData.userId].guessValue = playData.guessValue;
@@ -24,14 +25,23 @@ const namePlayer = (G, ctx, metadata) => {
   G.gameMetadata = metadata;
 }
 
+const newQuestion = (G, ctx) => {
+  let die = ctx.random.Die(Questions.length);
+  while (G.previousQuestions.indexOf(die) > -1)
+    die = ctx.random.Die(Questions.length);
+  G.question = Questions[die].question;
+  G.questionIndex = die;
+}
+
 const odds = { "-4": 6, "-3": 5, "-2": 4, "-1": 3, "0": 2, "1": 3, "2": 4, "3": 5};
 
 
 export const WitsWagers = {
   setup: (ctx) => ({
     round: 1,
-    random: ctx.random,
-    question: "How many are there?",
+    previousQuestions: [],
+    questionIndex: undefined,
+    question: undefined,
     answer: undefined,
     layout: {},
     results: {},
@@ -68,7 +78,7 @@ export const WitsWagers = {
         }     
         G.results = {};
         G.answer = undefined;
-        G.end = false;
+        newQuestion(G, ctx);
         ctx.events.setActivePlayers({
           currentPlayer: { stage: 'guessStage' },
           others: { stage: 'guessStage' },
@@ -119,7 +129,7 @@ export const WitsWagers = {
         });
       },
       onEnd: (G, ctx) => {
-        G.answer = 42;
+        G.answer = Questions[G.questionIndex].answer;
         G.results = {};
         const uniqueValues = [...new Set(G.players.map(player => player.guessValue))].sort();
         let winner;
@@ -175,6 +185,7 @@ export const WitsWagers = {
       },
       onEnd: (G, ctx) => {
         G.players[0].guessValue = undefined;
+        G.previousQuestions.push(G.questionIndex);
       },
       turn: {
         stages: {
