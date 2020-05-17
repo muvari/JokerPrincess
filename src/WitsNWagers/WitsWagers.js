@@ -64,6 +64,7 @@ export const WitsWagers = {
         G.results = {};
         G.round += 1;
         G.answer = undefined;
+        G.end = false;
         ctx.events.setActivePlayers({
           currentPlayer: { stage: 'guessStage' },
           others: { stage: 'guessStage' },
@@ -113,26 +114,7 @@ export const WitsWagers = {
           others: { stage: 'wager1' },
         });
       },
-      endIf: (G, ctx) => {
-        return !G.players.some((p) => !(p.wager1 && p.wager2));
-      },
-      turn: {
-        stages: {
-          wager1: {
-            moves: { wager1, wager2 },
-            next: 'wait'
-          },
-          wait: {
-            moves: {},
-          }
-        }
-      }
-    },
-
-    result: {
-      moves: { nextRound },
-      next: "guess",
-      onBegin: (G, ctx) => {
+      onEnd: (G, ctx) => {
         G.answer = 42;
         G.results = {};
         const uniqueValues = [...new Set(G.players.map(player => player.guessValue))].sort();
@@ -163,6 +145,27 @@ export const WitsWagers = {
           G.results[p.id] = pR;
         }
       },
+      endIf: (G, ctx) => {
+        return !G.players.some((p) => !(p.wager1 && p.wager2));
+      },
+      turn: {
+        stages: {
+          wager1: {
+            moves: { wager1, wager2 },
+            next: 'wait'
+          },
+          wait: {
+            moves: {},
+          }
+        }
+      }
+    },
+    result: {
+      moves: { nextRound },
+      onEnd: (G, ctx) => {
+        G.players[0].guessValue = undefined;
+      },
+      next: 'guess',   
     },
   },
 

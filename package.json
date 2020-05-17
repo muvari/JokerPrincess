@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.13.0",
-    "boardgame.io": "^0.38.1",
+    "boardgame.io": "^0.39.11",
     "esm": "^3.2.25",
     "koa": "^2.11.0",
     "koa-static": "^5.0.0",

@@ -66,6 +66,7 @@
   border-radius: 4px;
   font-weight: 700;
   user-select: none;
+  min-width: 50px;
 }
 .player-wager {
   padding: 4px 8px;
